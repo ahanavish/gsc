@@ -1,8 +1,9 @@
 import React from "react";
+import Navbar from "./Navbar";
 
 function Dashboard() {
     return (
-        <h1>hgvgh</h1>
+        <Navbar />
     );
 }
 

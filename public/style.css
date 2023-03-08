@@ -174,4 +174,70 @@ button:hover {
     }
 }
 
-.nsm7Bb-HzV7m-LgbsSe {}
+/* navbar */
+.navbar {
+    position: fixed;
+    background-color: #192e5c;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.fa {
+    color: white;
+}
+
+.fa-bars {
+    float: left;
+    margin-left: 25px;
+    margin-top: 13px;
+}
+
+.brand-name {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 30px;
+    margin-left: 35px;
+    margin-top: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.options {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: 17px;
+    margin-right: 25px;
+    width: 28%;
+    font-family: 'Montserrat', sans-serif;
+    justify-content: space-between;
+}
+
+.guide {
+    display: inline;
+    margin: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.pay-bill {
+    display: inline;
+    margin: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.analyze {
+    display: inline;
+    margin: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: white;
+    float: right;
+    margin-top: -6px;
+}
