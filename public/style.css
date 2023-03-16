@@ -208,9 +208,9 @@ button:hover {
     color: #ffffff;
     font-weight: 500;
     font-size: 18px;
-    margin-top: 17px;
     margin-right: 25px;
-    width: 28%;
+    margin-top: 20px;
+    width: 23%;
     font-family: 'Montserrat', sans-serif;
     justify-content: space-between;
 }
@@ -219,25 +219,66 @@ button:hover {
     display: inline;
     margin: 15px;
     font-family: 'Montserrat', sans-serif;
-}
-
-.pay-bill {
-    display: inline;
-    margin: 15px;
-    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
 }
 
 .analyze {
     display: inline;
     margin: 15px;
     font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
 }
 
-.circle {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background-color: white;
-    float: right;
-    margin-top: -6px;
+.logout {
+    display: inline;
+    margin: 15px;
+    font-family: 'Montserrat', sans-serif;
+    color: rgb(135, 135, 135);
+    cursor: pointer;
+}
+
+/* slider */
+.demo-content {
+    color: #fff;
+    display: flex;
+    font-weight: 100;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    border-radius: 3px;
+    font-size: 56px;
+    height: 250px;
+    width: 100%;
+}
+
+.carousel__item:nth-child(1) .demo-content {
+    background-color: #216485;
+}
+
+.carousel__item:nth-child(2) .demo-content {
+    background-color: #3692b6;
+}
+
+.carousel__item:nth-child(3) .demo-content {
+    background-color: #6fccc9;
+}
+
+.carousel__item:nth-child(4) .demo-content {
+    background-color: #a6e3cf;
+}
+
+.carousel__item:nth-child(5) .demo-content {
+    background-color: #aff0be;
+}
+
+.carousel__item:nth-child(6) .demo-content {
+    background-color: #527059;
+}
+
+.carousel__item:nth-child(7) .demo-content {
+    background-color: #243127;
 }
