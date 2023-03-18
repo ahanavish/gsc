@@ -24,7 +24,6 @@ function Navbar() {
                 <div className="analyze">Analyze</div>
                 <div className="logout" onClick={handleSignOut}>Log Out</div>
             </div>
-            {/* <img src="" alt="user image" /> */}
         </div>
     );
 }
