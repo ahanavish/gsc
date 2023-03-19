@@ -247,4 +247,69 @@ button:hover {
     overflow: hidden;
     background-color: #b85d5d;
     color: #000;
+    cursor: pointer;
+    border: 2px solid #000;
+    z-index: -1;
+}
+
+.yt-thumbnail {
+    height: 140px;
+    width: 250px;
+    object-fit: cover;
+    object-position: 25% 50%;
+}
+
+.youtube-container {
+    width: 83%;
+    margin-top: 13%;
+    margin-left: 9%;
+    padding: 10px;
+    background-color: #e3dede;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.modalContainer {
+    max-width: 600px;
+    width: 100%;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.75);
+}
+
+.closeBtn {
+    position: fixed;
+    top: 8px;
+    right: 8px;
+}
+
+@media screen and (max-width: 500px) {
+    .modalContainer {
+        flex-direction: column;
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .closeBtn {
+        color: white;
+    }
+}
+
+.head {
+    position: fixed;
+    top: 20%;
+    left: 10%;
+    color: #454343;
 }
