@@ -9,6 +9,7 @@ function Card(props) {
     return (
         <div className="card-wrapper">
             <img src={props.thumbnail} className="yt-thumbnail" onClick={() => handleCardClick(props.url)}></img>
+            <div className="overlay-text">{props.title}</div>
         </div>
     );
 }

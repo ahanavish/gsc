@@ -246,7 +246,7 @@ button:hover {
     height: 140px;
     width: 250px;
     overflow: hidden;
-    background-color: #b85d5d;
+    background-color: #212121;
     color: #000;
     cursor: pointer;
     border: 2px solid #000;
@@ -258,13 +258,22 @@ button:hover {
     width: 250px;
     object-fit: cover;
     object-position: 25% 50%;
+    opacity: 0.1;
+}
+
+.yt-thumbnail:hover {
+    opacity: 1.0;
+}
+
+.card-wrapper:hover .overlay-text {
+    display: none;
 }
 
 .youtube-container {
     width: 83%;
     margin-top: 13%;
     margin-left: 9%;
-    padding: 10px;
+    padding: 14px;
     background-color: #e3dede;
 }
 
@@ -273,6 +282,17 @@ button:hover {
     position: fixed;
     width: 100%;
     height: 100%;
+}
+
+.overlay-text {
+    position: absolute;
+    margin: 10px;
+    top: 14px;
+    left: 13px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
 }
 
 .modalContainer {

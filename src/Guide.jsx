@@ -5,6 +5,7 @@ import Card from './Card';
 import Navbar from './Navbar';
 
 let thumbnailArray = [];
+let titleArray = [];
 let urlArray = [];
 
 const responsive = {
@@ -29,7 +30,7 @@ const responsive = {
 
 function createCard(i) {
     return (
-        <Card thumbnail={thumbnailArray[i]} url={urlArray[i]} />
+        <Card thumbnail={thumbnailArray[i]} url={urlArray[i]} title={titleArray[i]} />
     );
 }
 
@@ -48,6 +49,7 @@ function Guide() {
                 for (let v of videos) {
                     thumbnailArray.push(`${v.snippet.thumbnails.default.url}`)
                     urlArray.push(`${v.snippet.resourceId.videoId}`)
+                    titleArray.push(`${v.snippet.title}`)
                 }
             })
     })
