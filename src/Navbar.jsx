@@ -21,7 +21,7 @@ function Navbar() {
             {/* <div>Hey, {user?.displayName}</div> */}
             <div className="options">
                 <Link to="/guide"><div className="guide">Guide</div></Link>
-                <div className="analyze">Analyze</div>
+                <Link to="/analyze"><div className="analyze">Analyze</div></Link>
                 <div className="logout" onClick={handleSignOut}>Log Out</div>
             </div>
         </div>

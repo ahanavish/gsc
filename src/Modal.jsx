@@ -1,16 +1,9 @@
 import React from "react";
 
-function Modal({ open, onClose }) {
-    if (!open) return null;
-
+function Modal() {
     return (
-        <div onClick={onClose} className="overlay">
-            <div onClick={(e) => {
-                e.stopPropagation();
-            }} className="modalContainer">
-
-                <p onClick={onClose} className='closeBtn'>X</p>
-            </div>
+        <div>
+            <h1>gvg</h1>
         </div>
     );
 }

@@ -6,6 +6,7 @@ import Guide from './Guide';
 import { AuthContextProvider } from './context/AuthContext';
 import Protected from './context/Protected';
 import SignIn from './SignIn';
+import Analyze from './Analyze';
 
 class App extends Component {
     render() {
@@ -17,6 +18,7 @@ class App extends Component {
                         <Route exact path='/signin' element={<SignIn />} />
                         <Route exact path='/dashboard' element={<Protected><Dashboard /></Protected>} />
                         <Route exact path='/guide' element={<Guide />} />
+                        <Route exact path='/analyze' element={<Analyze />} />
                     </Routes>
                 </AuthContextProvider>
             </div>

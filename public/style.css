@@ -118,13 +118,15 @@ form {
     text-align: center;
 }
 
-input {
+input,
+select {
     background-color: #e4e3e3;
     border: none;
     padding: 12px 15px;
     margin: 8px 0;
     width: 100%;
     outline: none;
+    border-radius: 2px;
 }
 
 .social {
@@ -158,7 +160,6 @@ button {
     font-weight: bold;
     padding: 12px 45px;
     letter-spacing: 1px;
-    text-transform: uppercase;
     outline: none;
     transition: .3s ease-in-out;
     margin: 10px 0px;
@@ -312,4 +313,103 @@ button:hover {
     top: 20%;
     left: 10%;
     color: #454343;
+}
+
+/*analyze*/
+
+.form-wrap {
+    position: relative;
+    width: 700px;
+    margin: 200px auto;
+    display: flex;
+}
+
+.form-container {
+    position: absolute;
+    background-color: #ececec;
+    padding: 20px 25px;
+    width: 700px;
+    border-radius: 5px;
+}
+
+.submitBtn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 200px;
+}
+
+.input1,
+.input2,
+.input3 {
+    display: inline-block;
+    box-sizing: border-box;
+    size: 30px;
+}
+
+#wattage,
+#hours {
+    width: 150px;
+    display: block;
+}
+
+option {
+    font-size: 14px;
+    background-color: #ffffff;
+    padding-top: 10px;
+}
+
+option:before {
+    content: ">";
+    font-size: 14px;
+    display: none;
+    padding-left: 5px;
+    color: #fff;
+}
+
+option:hover:before {
+    display: inline;
+}
+
+.inputFields {
+    width: 650px;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+
+.addFields {
+    display: flex;
+    justify-content: center;
+}
+
+.add-button {
+    font-size: 13px;
+    font-weight: lighter;
+    padding-bottom: 10px;
+}
+
+.remove-button {
+    border-radius: 20px;
+    background-color: rgb(255, 89, 89);
+    color: #FFF;
+    font-size: 12px;
+    font-weight: lighter;
+    padding: 10px;
+    letter-spacing: 0;
+    outline: none;
+    transition: .3s ease-in-out;
+    margin: 0;
+    margin-top: 27px;
+}
+
+.submit-button {
+    border-radius: 3px;
+    background: #192e5c;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 30px;
+    letter-spacing: 3px;
+    transition: .5s ease-in-out;
 }
