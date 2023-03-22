@@ -3,7 +3,6 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import Card from './Card';
 import Navbar from './Navbar';
-import Modal from './Modal';
 
 let thumbnailArray = [];
 let urlArray = [];
@@ -70,7 +69,6 @@ function Guide() {
                     {createCard(8)}
                 </Carousel>
             </div>
-            <Modal />
         </div>
     );
 }

@@ -33,7 +33,7 @@ function Analyze() {
                                 <div className="inputFields">
                                     <div className="input1" >
                                         <label for="appName" className="labeeling">Application type</label>
-                                        <select id="appName" name="appName">
+                                        <select id="appName" name="appName" onChange={e => handleinputchange(e, i)}>
                                             <option value="washingmachine">Washing Machine</option>
                                             <option value="refrigerator">Refrigerator</option>
                                             <option value="television">Television</option>
@@ -48,12 +48,12 @@ function Analyze() {
                                         </select>
                                     </div>
                                     <div className="input2">
-                                        <label for="wattage">Wattage (optional)</label>
-                                        <input type="number" id="wattage" name="wattage" onChange={e => handleinputchange(e, i)} />
-                                    </div>
-                                    <div className="input3">
                                         <label for="hours">Average no of hours</label>
                                         <input type="number" id="hours" name="hours" onChange={e => handleinputchange(e, i)} />
+                                    </div>
+                                    <div className="input3">
+                                        <label for="wattage">Wattage (optional)</label>
+                                        <input type="number" id="wattage" name="wattage" onChange={e => handleinputchange(e, i)} />
                                     </div>
                                     {
                                         inputList.length !== 1 &&
