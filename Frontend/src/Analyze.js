@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
+import { UserAuth } from './context/AuthContext';
 
 function Analyze() {
+    const { user } = UserAuth();
+
     const [inputList, setinputList] = useState([{ wattage: '', hours: '' }]);
 
     const handleinputchange = (e, index) => {
@@ -32,7 +35,7 @@ function Analyze() {
                             return (
                                 <div className="inputFields">
                                     <div className="input1" >
-                                        <label for="appName" className="labeeling">Application type</label>
+                                        <label for="appName" className="labeeling">Appliance type</label>
                                         <select id="appName" name="appName" onChange={e => handleinputchange(e, i)}>
                                             <option value="washingmachine">Washing Machine</option>
                                             <option value="refrigerator">Refrigerator</option>
@@ -65,11 +68,11 @@ function Analyze() {
                             );
                         })}
                     <div className="addFields">
-                        <button className="add-button" onClick={handleAddField}>Add new application +</button>
+                        <button className="add-button" onClick={handleAddField}>Add new Appliance +</button>
                     </div>
                 </div>
                 <div className="submitBtn">
-                    <button className="submit-button">SUBMIT</button>
+                    <button className="submit-button"></button>
                 </div>
             </div>
         </div>
