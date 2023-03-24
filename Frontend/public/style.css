@@ -90,6 +90,14 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.form-wrapper2 {
+    padding-top: 20px;
+    background-color: #f3f3f3;
+    height: 400px;
+    width: 500px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .form-wrapper h1 {
     text-transform: uppercase;
     font-weight: bold;
@@ -119,7 +127,8 @@ form {
 }
 
 input,
-select {
+select,
+option {
     background-color: #e4e3e3;
     border: none;
     padding: 12px 15px;
@@ -127,6 +136,7 @@ select {
     margin: 8px 0;
     width: 100%;
     outline: none;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .social {
@@ -344,6 +354,10 @@ button:hover {
     margin-top: 80px;
 }
 
+.carousel-wrapper h1 {
+    font-family: 'Montserrat', sans-serif;
+}
+
 .card-wrapper {
     position: relative;
 }
@@ -369,12 +383,14 @@ button:hover {
 .form-wrap {
     position: relative;
     width: 700px;
-    margin: 200px auto;
+    margin: 180px auto;
+    margin-bottom: 20px;
     display: flex;
+    flex-direction: column;
+    color: #000;
 }
 
 .form-container {
-    position: absolute;
     background-color: #ececec;
     padding: 20px 25px;
     width: 700px;
@@ -382,10 +398,7 @@ button:hover {
 }
 
 .submitBtn {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 200px;
+    margin: 20px auto;
 }
 
 .input1,
@@ -468,4 +481,39 @@ option:hover:before {
     top: 15px;
     left: 0;
     right: 0;
+}
+
+.inputs {
+    margin-top: 20px;
+}
+
+.form-wrapper2 h4 {
+    position: relative;
+    margin-top: 30px;
+    margin-bottom: -10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.form-wrapper2 h1 {
+    margin-top: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.form-wrapper2 label {
+    float: left;
+    margin-top: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.inputFields label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+}
+
+.add-button {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.submit-button {
+    font-family: 'Montserrat', sans-serif;
 }

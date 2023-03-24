@@ -25,6 +25,7 @@ function Analyze() {
         setinputList([...inputList, { appName: '', wattage: '', hours: '' }]);
     }
 
+
     return (
         <div>
             <Navbar />
@@ -36,7 +37,7 @@ function Analyze() {
                                 <div className="inputFields">
                                     <div className="input1" >
                                         <label for="appName" className="labeeling">Appliance type</label>
-                                        <select id="appName" name="appName" onChange={e => handleinputchange(e, i)}>
+                                        <select id="appName" name="appName" onChange={e => handleinputchange(e, i)} required>
                                             <option value="washingmachine">Washing Machine</option>
                                             <option value="refrigerator">Refrigerator</option>
                                             <option value="television">Television</option>
@@ -52,11 +53,11 @@ function Analyze() {
                                     </div>
                                     <div className="input2">
                                         <label for="hours">Average no of hours</label>
-                                        <input type="number" id="hours" name="hours" onChange={e => handleinputchange(e, i)} />
+                                        <input type="number" id="hours" name="hours" onChange={e => handleinputchange(e, i)} required />
                                     </div>
                                     <div className="input3">
                                         <label for="wattage">Wattage (optional)</label>
-                                        <input type="number" id="wattage" name="wattage" onChange={e => handleinputchange(e, i)} />
+                                        <input type="number" id="wattage" name="wattage" onChange={e => handleinputchange(e, i)} required />
                                     </div>
                                     {
                                         inputList.length !== 1 &&
@@ -68,11 +69,11 @@ function Analyze() {
                             );
                         })}
                     <div className="addFields">
-                        <button className="add-button" onClick={handleAddField}>Add new Appliance +</button>
+                        <button className="add-button" onClick={handleAddField}>Add a new appliance +</button>
                     </div>
                 </div>
                 <div className="submitBtn">
-                    <button className="submit-button"></button>
+                    <button className="submit-button">SUBMIT</button>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ const SignIn = () => {
 
     useEffect(() => {
         if (user != null) {
-            navigate('/dashboard');
+            navigate('/signin2');
         }
     }, [user]);
 

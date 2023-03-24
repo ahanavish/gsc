@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { UserAuth } from "./context/AuthContext";
 
 function Navbar() {
-    const { user, logOut } = UserAuth()
+    const { logOut } = UserAuth()
 
     const handleSignOut = async () => {
         try {
@@ -15,10 +15,11 @@ function Navbar() {
 
     return (
         <div className="navbar">
-            <div className="brand-name">
-                Project Name
-            </div>
-            {/* <div>Hey, {user?.displayName}</div> */}
+            <Link to="/dashboard">
+                <div className="brand-name">
+                    Project Name
+                </div>
+            </Link>
             <div className="options">
                 <Link to="/guide"><div className="guide">Guide</div></Link>
                 <Link to="/analyze"><div className="analyze">Analyze</div></Link>
