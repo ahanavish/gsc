@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 import { UserAuth } from './context/AuthContext';
+import { useNavigate } from "react-router-dom";
 
 function Analyze() {
+    let navigate = useNavigate();
     const { user } = UserAuth();
 
-    const [inputList, setinputList] = useState([{ wattage: '', hours: '' }]);
+    const [inputList, setinputList] = useState([{ appName: '', wattage: '', hours: '' }]);
 
     const handleinputchange = (e, index) => {
         const { name, value } = e.target;
@@ -25,10 +27,22 @@ function Analyze() {
         setinputList([...inputList, { appName: '', wattage: '', hours: '' }]);
     }
 
+    const handleSubmit = () => {
+        let list = inputList;
+
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].appName == "" || list[i].hours == "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+        }
+
+        navigate('/dashboard');
+    }
 
     return (
         <div>
-            <Navbar />
+            <Navbar item1="Dashboard" item2="Guide" />
             <div className="form-wrap">
                 <div className="form-container">
                     {
@@ -36,7 +50,7 @@ function Analyze() {
                             return (
                                 <div className="inputFields">
                                     <div className="input1" >
-                                        <label for="appName" className="labeeling">Appliance type</label>
+                                        <label for="appName" className="labelling">Appliance type</label>
                                         <select id="appName" name="appName" onChange={e => handleinputchange(e, i)} required>
                                             <option value="washingmachine">Washing Machine</option>
                                             <option value="refrigerator">Refrigerator</option>
@@ -73,7 +87,7 @@ function Analyze() {
                     </div>
                 </div>
                 <div className="submitBtn">
-                    <button className="submit-button">SUBMIT</button>
+                    <button className="submit-button" onClick={handleSubmit}>SUBMIT</button>
                 </div>
             </div>
         </div>

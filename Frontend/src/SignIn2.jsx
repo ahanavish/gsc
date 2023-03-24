@@ -1,14 +1,25 @@
 import React from "react";
 import { UserAuth } from "./context/AuthContext";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SignIn2() {
+    let navigate = useNavigate();
     const { user } = UserAuth();
+
+    const handleProceed = () => {
+        let x = document.forms["signin2form"]["state"].value;
+        let y = document.forms["signin2form"]["familymembers"].value;
+        if (x == "" || y == "") {
+            alert("All fields must be filled out");
+            return false;
+        }
+        navigate('/dashboard');
+    }
 
     return (
         <div className="form">
             <div className="form-wrapper2">
-                <form action="#">
+                <form action="#" name="signin2form">
                     <h1>Hey, {user.displayName}!</h1>
                     <h4>We need to know a little more about you.</h4>
                     <div className="inputs">
@@ -47,11 +58,9 @@ function SignIn2() {
                         <label for="familymembers">How many people do you have in your family?</label>
                         <input type="number" id="familymembers" name="familymembers" min="1" required></input>
                     </div>
-                    <Link to="/dashboard">
-                        <div className="submitBtn">
-                            <button className="submitbutton">Proceed</button>
-                        </div>
-                    </Link>
+                    <div className="submitBtn">
+                        <button className="submitbutton" onClick={handleProceed}>Proceed</button>
+                    </div>
                 </form>
             </div>
         </div>

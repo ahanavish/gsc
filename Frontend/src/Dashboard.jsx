@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 
 function Dashboard() {
     return (
-        <Navbar />
+        <Navbar item1="Guide" item2="Analyze" />
 
     );
 }

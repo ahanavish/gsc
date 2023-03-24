@@ -39,7 +39,7 @@
     font-size: 20px;
     color: #fff;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     letter-spacing: 3px;
     background-color: transparent;
     cursor: pointer;
@@ -194,6 +194,7 @@ button:hover {
     height: 60px;
     display: flex;
     justify-content: space-between;
+    z-index: 2;
 }
 
 .fa {
@@ -219,14 +220,13 @@ button:hover {
     color: #ffffff;
     font-weight: 500;
     font-size: 18px;
-    margin-right: 25px;
     margin-top: 20px;
-    width: 23%;
+    width: 27%;
     font-family: 'Montserrat', sans-serif;
     justify-content: space-between;
 }
 
-.guide {
+.item1 {
     display: inline;
     margin: 15px;
     font-family: 'Montserrat', sans-serif;
@@ -235,7 +235,7 @@ button:hover {
     cursor: pointer;
 }
 
-.analyze {
+.item2 {
     display: inline;
     margin: 15px;
     font-family: 'Montserrat', sans-serif;
@@ -382,7 +382,7 @@ button:hover {
 
 .form-wrap {
     position: relative;
-    width: 700px;
+    width: 750px;
     margin: 180px auto;
     margin-bottom: 20px;
     display: flex;
@@ -392,8 +392,8 @@ button:hover {
 
 .form-container {
     background-color: #ececec;
-    padding: 20px 25px;
-    width: 700px;
+    padding: 20px 30px;
+    width: 750px;
     border-radius: 5px;
 }
 
@@ -434,7 +434,7 @@ option:hover:before {
 }
 
 .inputFields {
-    width: 650px;
+    width: 690px;
     display: flex;
     justify-content: space-between;
     padding-bottom: 10px;
@@ -454,15 +454,14 @@ option:hover:before {
 .remove-button {
     padding: 12px 15px;
     border-radius: 2px;
-    background-color: rgb(255, 89, 89);
+    background-color: rgb(201, 71, 71);
     color: #FFF;
     font-size: 13px;
     font-weight: lighter;
     letter-spacing: 0;
     outline: none;
     transition: .3s ease-in-out;
-    margin-top: 26px;
-    margin-left: 5px;
+    margin-top: 27px;
 }
 
 .submit-button {
