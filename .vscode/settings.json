@@ -1,0 +1,14 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.languageServer": "Pylance",
+    "isort.importStrategy": "fromEnvironment",
+    "[python]" : {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports":true,
+        }
+    },
+    "python.formatting.provider": "black"
+}
