@@ -243,8 +243,8 @@ button:hover {
 }
 
 .card-wrapper {
-    height: 140px;
-    width: 250px;
+    height: 150px;
+    width: 290px;
     overflow: hidden;
     background-color: #212121;
     color: #000;
@@ -254,8 +254,8 @@ button:hover {
 }
 
 .yt-thumbnail {
-    height: 140px;
-    width: 250px;
+    height: 150px;
+    width: 290px;
     object-fit: cover;
     object-position: 25% 50%;
     opacity: 0.1;
@@ -270,9 +270,19 @@ button:hover {
 }
 
 .youtube-container {
-    width: 83%;
-    margin-top: 13%;
-    margin-left: 9%;
+    position: absolute;
+    width: 95%;
+    margin-top: 43px;
+    margin-left: 30px;
+    padding: 14px;
+    background-color: #e3dede;
+}
+
+.blog-container {
+    position: absolute;
+    width: 95%;
+    margin-top: 275px;
+    margin-left: 30px;
     padding: 14px;
     background-color: #e3dede;
 }
@@ -328,10 +338,29 @@ button:hover {
     }
 }
 
-.head {
-    position: fixed;
-    top: 20%;
-    left: 10%;
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+    margin-top: 80px;
+}
+
+.card-wrapper {
+    position: relative;
+}
+
+.youtube-head {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: #454343;
+}
+
+.blog-head {
+    position: relative;
+    width: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 268px;
     color: #454343;
 }
 
@@ -432,4 +461,11 @@ option:hover:before {
     padding: 10px 30px;
     letter-spacing: 3px;
     transition: .5s ease-in-out;
+}
+
+.guide-container {
+    position: relative;
+    top: 15px;
+    left: 0;
+    right: 0;
 }
