@@ -10,6 +10,7 @@ const Init = require('./controller/SetInit.js');
 const Values = require('./controller/Values.js');
 const IsExist = require('./controller/IsExist.js');
 const GetProfile = require('./controller/Dashboard.js');
+const GetTimeSeries = require('./controller/TimeSeries.js');
 
 //const db = require('./config.js');
 require('dotenv').config();
@@ -97,6 +98,12 @@ app.get('/profile', async (req,res)=>{
     const profile = await GetProfile(uid);
     res.send({data:profile});
 });
+
+app.get('/timeseries', async (req,res)=>{
+    const uid = req.query.uid;
+    const data = await GetTimeSeries(uid);
+    res.send({data:data});
+})
 
 app.listen(process.env.PORT || 8080, (err)=>{
     console.log(`Server is running on Port ${process.env.PORT}`);

@@ -1,0 +1,51 @@
+ALL in JSON FORMAT
+
+
+/calculate
+req body
+{
+  "appliances":["Iron","Iron","Iron","Iron"],
+  "time":[23,7,2,3],
+  "user":{"uid":"b"},
+  "emailVerified":true,
+  "wattage":[12,32,54,32]
+}
+output: returns false if user doesnt exists , returns true if data is updated
+
+/initial
+req body
+{
+  "state":"Tamil Nadu",
+  "members": 3,
+  "user":{"uid":"b","name":"esef","email":"fewf@gmail.com"},
+  "emailVerified":true
+}
+output: returns false if user instance exists, returns true if user instance does not exists and creates it
+
+/inference
+req body
+{
+  "user":{"uid":"b"},
+  "emailVerified":true
+}
+output: returns true, and the model result in json
+
+/isexist
+req query
+http://localhost:8080/isexist?uid=cniwueh
+output: returns true if exists, false if the other
+
+/profile
+req query
+http://localhost:8080/profile?uid=cniwueh
+output: returns members,state. if it doesnt exist then it returns false
+
+/timeseries
+req query 
+http://localhost:8080/timeseries?uid=cniwueh
+app.get('/timeseries', async (req,res)=>{
+    const uid = req.query.uid;
+    const data = await GetTimeSeries(uid);
+    res.send({data:data});
+})
+output: returns values for data, else if false
