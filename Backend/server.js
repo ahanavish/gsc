@@ -125,8 +125,8 @@ app.post('/calculate', Auth, async(req, res)=> {
 app.post('/inference', Auth, async (req,res)=>{
     const result = await Values(req.body.user.uid);
     console.log(result);
-    await test(result);
-    res.send({status: true});
+    const data = await test(result);
+    res.send({status: true, data: data});
 })
 
 app.post('/initial', Auth, async (req,res)=>{
