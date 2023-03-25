@@ -1,3 +1,4 @@
+const util = require('util');
 const { spawn } = require('child_process');
 const fs = require('fs');
 
@@ -16,7 +17,6 @@ appliance.forEach((appl)=> {
 console.log(engy);*/
 module.exports = async function Model(inputData){
         
-
         const inputDataString = JSON.stringify(inputData);
         console.log(inputDataString);
         // Run the Python script and specify the output file
@@ -31,15 +31,23 @@ module.exports = async function Model(inputData){
         console.error(`stderr: ${data}`);
         });
 
-        pythonProcess.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
-        const a = fs.readFile('./output.json', 'utf8', (err, data) => {
-                if (err) {
-                console.error(err);
-                return;
-                }
-                return data
+        const readFile = util.promisify(fs.readFile);
+        const data_n = await new Promise((resolve, reject) => {
 
-        });
-        });
+                pythonProcess.on('close', (code) => {
+                        console.log(`child process exited with code ${code}`);
+                        readFile('./output.json', 'utf8')
+                                .then((data) => {
+                                console.log(data, 'data1');
+                                resolve(data);
+                                })
+                                .catch((err) => {
+                                console.error(err, 'err');
+                                reject(err);
+                                });
+                        });
+                });
+
+        console.log(data_n, 'data_n');
+        return data_n;
 }
