@@ -5,9 +5,11 @@ const { collection, getFirestore, getDocs, where, orderBy, addDoc, query, doc, s
 const UserLogic = require('./controller/UserLogic.js');
 const GetWattage = require('./controller/Wattage.js');
 const Auth = require('./middleware/Auth.js');
-const test = require('./test.js');
+const test = require('./translator.js');
 const Init = require('./controller/SetInit.js');
 const Values = require('./controller/Values.js');
+const IsExist = require('./controller/IsExist.js');
+const GetProfile = require('./controller/Dashboard.js');
 
 //const db = require('./config.js');
 require('dotenv').config();
@@ -61,64 +63,6 @@ app.post('/calculate', Auth, async(req, res)=> {
     // if the state , members is not entered, then it returns false, frontend logic to redirect to initial 
     const status = await UserLogic(uid, appliances, result);
 
-    function uselesscomment(){
-        //var querySnapshot = await getDocs(query(dbRef));
-
-    
-    /*function find(){
-        querySnapshot.forEach((doc) => {
-
-            console.log(doc.ref);
-            if(doc.id == uid){
-
-                
-                return true, docRef;
-            }
-
-        });
-        return false, null;
-
-    }
-
-    if(existsValue){
-        setDoc(dbRef, {
-            appliances: appliances,
-            time: time
-        })
-    }else{
-        const docRef = await setDoc(doc(dbRef, `${uid}`), {
-            name: "San Francisco",
-            state: "CA",
-            country: "USA"
-        })
-    }*/
-    
-    ///////////////////////////////////////////////////////////
-    /*await setDoc(doc(dbRef, `84325637452`), {
-        country: "Tajikisthan",
-    }, {
-        merge: true
-    })*/
-
-    // UserLogic.js - [ changes needed ]
-    /*const snap = await getDoc(doc(db, 'users', `v8TtSxfOjSRR5PqCzQQM`));
-    if(snap.exists()){
-        await setDoc(doc(dbRef, `${uid}`), {
-            state: state,
-            power: result,
-        }, {
-            merge: true
-        })
-    }else{
-        await setDoc(doc(dbRef, `${uid}`), {
-            name: name,
-            email: email,
-            state: state,
-            power: result           
-        })
-    }*/
-    }
-
     res.send({status: status});
 })
 
@@ -127,6 +71,13 @@ app.post('/inference', Auth, async (req,res)=>{
     console.log(result);
     const data = await test(result);
     res.send({status: true, data: data});
+})
+
+app.get('/isexist', async(req,res)=>{
+    console.log(req.query.uid, 'uid');
+    const status = await IsExist(req.query.uid); // req.params.uid is used in the url as a parameter
+
+    res.send({status: status})
 })
 
 app.post('/initial', Auth, async (req,res)=>{
@@ -140,6 +91,12 @@ app.post('/initial', Auth, async (req,res)=>{
 
     res.send({status: status});
 })
+
+app.get('/profile', async (req,res)=>{
+    const uid = req.query.uid;
+    const profile = await GetProfile(uid);
+    res.send({data:profile});
+});
 
 app.listen(process.env.PORT || 8080, (err)=>{
     console.log(`Server is running on Port ${process.env.PORT}`);

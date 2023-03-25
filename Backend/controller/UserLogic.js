@@ -6,14 +6,9 @@ module.exports = async function UserLogic(uid, appliance, result){
     try{
         const dbRef = collection(db, "users");
         const snap = await getDoc(doc(db, 'users', `${uid}`));
+
+        // check if user exists
         if(snap.exists()){
-
-            /*var engy = {}
-            for(let i=0; i<appliance.length; i++){
-                engy[appliance[i]] = result[i]
-            }*/
-
-            // sum of result
             var engy = 0;
             for(let i=0; i<result.length; i++){
                 engy += result[i];
@@ -21,32 +16,52 @@ module.exports = async function UserLogic(uid, appliance, result){
 
             var date = new Date();
             var day = date.getDate();
+            console.log(day);
 
             // get energy value from db using uid
             const snap = await getDoc(doc(db, 'users', `${uid}`));
             const data = snap.data();
-            const energy = data.energy;
-            // get day and engy array and append new values
-            var dayArr = energy.day;
-            var engyArr = energy.engy;
 
-            // pushes new value to array
-            console.log(engyArr);
-            engyArr.push(engy);
-            dayArr.push(day); 
+            const energy = data.energy
+            if( (energy) != undefined){
+                var dayArr = energy.day;
+                var engyArr = energy.engy;
 
-            // list of arrays, day and engy
-            const engylis = {day:dayArr,engy:engyArr}
+                // pushes new value to array
+                console.log(engyArr);
+                engyArr.push(engy);
+                dayArr.push(day); 
 
-            console.log(energy, 'energy');
+                // list of arrays, day and engy
+                const engylis = {day:dayArr,engy:engyArr}
 
-            await setDoc(doc(dbRef, `${uid}`), {
-                // make it so that it has a new id for each entry
-                energy : engylis
+                console.log(energy, 'energy');
 
-            }, {
-                merge: true
-            })
+                await setDoc(doc(dbRef, `${uid}`), {
+                    // make it so that it has a new id for each entry
+                    energy : engylis
+
+                }, {
+                    merge: true
+                })
+
+            }else{
+                // set new values
+                const engylis = {day:[day],engy:[engy]}
+
+                console.log(energy, 'energy');
+
+                await setDoc(doc(dbRef, `${uid}`), {
+                    // make it so that it has a new id for each entry
+                    energy : engylis
+
+                }, {
+                    merge: true
+                })
+            }
+
+            
+
         }else{
 
             /*var engy = {}

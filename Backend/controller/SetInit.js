@@ -7,7 +7,7 @@ module.exports = async function SetInit(uid, name=null, email=null, state, membe
         const snap = await getDoc(doc(db, 'users', `${uid}`));
         if(snap.exists()){
 
-            return true
+            return false
         }else{
 
             await setDoc(doc(dbRef, `${uid}`), {
@@ -16,6 +16,6 @@ module.exports = async function SetInit(uid, name=null, email=null, state, membe
                 state: state,
                 members: members
             })
-            return false
+            return true
         }
 }
