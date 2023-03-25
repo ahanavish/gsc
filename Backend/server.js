@@ -5,6 +5,9 @@ const { collection, getFirestore, getDocs, where, orderBy, addDoc, query, doc, s
 const UserLogic = require('./controller/UserLogic.js');
 const GetWattage = require('./controller/Wattage.js');
 const Auth = require('./middleware/Auth.js');
+const test = require('./test.js');
+const Init = require('./controller/SetInit.js');
+const Values = require('./controller/Values.js');
 
 //const db = require('./config.js');
 require('dotenv').config();
@@ -14,29 +17,21 @@ app.use(express.json(),
         cors()
 );
 
-/*
-app.post('/register', async (req,res)=>{
-    const data = req.body; // displayName, emali, uid
-    const {name, email, password} = data;
-    await user.add(data);
-})
-dunno if this will be implemented
-app.post('/login', (req,res)=>{
-
-})*/
-
 app.post('/calculate', Auth, async(req, res)=> {
 
-    var appliances = req.body.appliances;
+    // user form & user session data variables
+    const appliances = req.body.appliances;
     var time = req.body.time;
-    var state = req.body.state;
-    var user = req.body.user;
-    var wattage = req.body.wattage;
+    const state = req.body.state;
+    const user = req.body.user;
+    const wattage = req.body.wattage;
+    const members = req.body.members;
     console.log(req.body);
 
+    // nesting user session variable
     var {uid, name, email, emailVerified} = user;
 
-    // wattage is not there for certain items, then query item wattage from db
+    // wattage queried from the DB
     const def = await GetWattage();
 
     console.log(wattage);
@@ -52,8 +47,8 @@ app.post('/calculate', Auth, async(req, res)=> {
         }
     }
 
+    var result=[];
     if( (time && appliances) && (time.length == appliances.length) ){
-        var result=[]
 
         for(i=0;i<appliances.length;i++){
             result[i] = wattage[i]*time[i]
@@ -62,8 +57,9 @@ app.post('/calculate', Auth, async(req, res)=> {
     }else{
         res.send({error: 'Please provide time and power'});
     }
-
-    const status = await UserLogic(uid, name, email, state, result);
+    console.log(result, 'result');
+    // if the state , members is not entered, then it returns false, frontend logic to redirect to initial 
+    const status = await UserLogic(uid, appliances, result);
 
     function uselesscomment(){
         //var querySnapshot = await getDocs(query(dbRef));
@@ -124,13 +120,25 @@ app.post('/calculate', Auth, async(req, res)=> {
     }
 
     res.send({status: status});
-
 })
 
-app.post('/inference', (req,res)=>{
-    // model endpoint on azure 
-        // data bricks, datawarehousing, kafka, autotraining
+app.post('/inference', Auth, async (req,res)=>{
+    const result = await Values(req.body.user.uid);
+    console.log(result);
+    await test(result);
+    res.send({status: true});
+})
+
+app.post('/initial', Auth, async (req,res)=>{
+    var members = req.body.members
+    var state = req.body.state
+    var {uid, name, email, emailVerified} = req.body.user;
     
+    // retrives bool value to check if user already exists in DB, if it does then returns true, where frontend logic is handled to redirect to dashboard
+    // returns false if user doesnt exists
+    var status = await Init(uid, name, email, state, members);
+
+    res.send({status: status});
 })
 
 app.listen(process.env.PORT || 8080, (err)=>{
