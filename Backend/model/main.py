@@ -1,4 +1,8 @@
 """Preprocessing the input data"""
+import sys
+import json
+
+import requests
 import torch
 from saveload import LSTMNet
 from sklearn.preprocessing import MinMaxScaler
@@ -9,6 +13,35 @@ from torch.autograd import Variable
 import pandas as pd
 
 
+# Loading data
+
+
+input_data_string = sys.argv[1]
+
+# Parse the JSON data into a Python object
+input_data = json.loads(input_data_string)
+
+# response_API = requests.get('http://localhost:8080/inference')
+# #print(response_API.status_code)
+# # data = response_API.text
+# # parse_json = json.loads(data)
+# # info = parse_json['description']
+# # print("Info about API:\n", info)
+# # key = parse_json['date']['engy']
+# # print("\nDescription about the key:\n",key)
+# response_API.raise_for_status()  # raises exception when not a 2xx response
+# if response_API.status_code != 204:
+#     print(response_API.json())
+
+
+
+json_file_path = "Backend/output.json"
+
+with open(json_file_path, 'r') as j:
+    contents = json.loads(j.read())
+    print(contents)
+
+
 EPOCHS = 3000
 LEARNING_RATE = 0.001
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -16,7 +49,7 @@ INPUT_SIZE = 1
 HIDDEN_SIZE = 200
 NUM_LAYERS = 1
 model = LSTMNet(INPUT_SIZE, HIDDEN_SIZE, NUM_LAYERS)
-model.load_state_dict(torch.load("../gsc/Backend/model/fina_model.pt"))
+model.load_state_dict(torch.load("Backend/model/fina_model.pt"))
 criterion = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
@@ -88,4 +121,11 @@ y_pred_scaled = valid_predict.data.numpy()
 y_pred = scaler.inverse_transform(y_pred_scaled)
 print(y_pred.shape)
 print(y_pred)
+input_data = {'energy': y_pred.tolist()}
 # y_pred is the  output tensor
+
+# dumping output to a new json file.
+with open('Backend/new.json', 'w') as f:
+    json.dump(input_data, f)
+
+print('done')
