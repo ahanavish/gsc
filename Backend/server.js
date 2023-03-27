@@ -71,7 +71,9 @@ app.post('/inference', Auth, async (req,res)=>{
     const result = await Values(req.body.user.uid);
     console.log(result);
     const data = await test(result);
-    res.send({status: true, data: data});
+    console.log(data, 'data2');
+
+    return res.json({data: data});
 })
 
 app.get('/isexist', async(req,res)=>{
@@ -101,6 +103,7 @@ app.get('/profile', async (req,res)=>{
 
 app.get('/timeseries', async (req,res)=>{
     const uid = req.query.uid;
+    console.log(uid);
     const data = await GetTimeSeries(uid);
     res.send({data:data});
 })

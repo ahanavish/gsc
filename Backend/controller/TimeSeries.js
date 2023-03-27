@@ -6,8 +6,9 @@ module.exports = async function timeseries(uid){
     // return day and engy
     const snap = await getDoc(doc(db, 'users', `${uid}`));
     const data = snap.data();
-    
-    if(data.energy != undefined){
+    var check = data.energy;
+    console.log(data);
+    if(check != undefined){
         const energy = data.energy;
         const day = energy.day;
         const engy = energy.engy;
