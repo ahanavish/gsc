@@ -9,6 +9,34 @@ from torch.autograd import Variable
 import pandas as pd
 
 
+# Loading data
+
+
+input_data_string = sys.argv[1]
+
+# Parse the JSON data into a Python object
+input_data = json.loads(input_data_string)
+
+# response_API = requests.get('http://localhost:8080/inference')
+# #print(response_API.status_code)
+# # data = response_API.text
+# # parse_json = json.loads(data)
+# # info = parse_json['description']
+# # print("Info about API:\n", info)
+# # key = parse_json['date']['engy']
+# # print("\nDescription about the key:\n",key)
+# response_API.raise_for_status()  # raises exception when not a 2xx response
+# if response_API.status_code != 204:
+#     print(response_API.json())
+
+
+# json_file_path = "Backend/output.json"
+# 
+# with open(json_file_path, 'r') as j:
+#     contents = json.loads(j.read())
+#     print(contents)
+
+
 EPOCHS = 3000
 LEARNING_RATE = 0.001
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -89,3 +117,10 @@ y_pred = scaler.inverse_transform(y_pred_scaled)
 print(y_pred.shape)
 print(y_pred)
 # y_pred is the  output tensor
+
+# dumping output to a new json file.
+with open('Backend/new.json', 'w') as f:
+    json.dump(input_data, f)
+
+print('done')
+
