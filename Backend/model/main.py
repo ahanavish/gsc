@@ -1,4 +1,6 @@
 """Preprocessing the input data"""
+import sys
+import json
 import torch
 from saveload import LSTMNet
 from sklearn.preprocessing import MinMaxScaler
@@ -44,7 +46,7 @@ INPUT_SIZE = 1
 HIDDEN_SIZE = 200
 NUM_LAYERS = 1
 model = LSTMNet(INPUT_SIZE, HIDDEN_SIZE, NUM_LAYERS)
-model.load_state_dict(torch.load("../gsc/Backend/model/fina_model.pt"))
+model.load_state_dict(torch.load("./model/fina_model.pt"))
 criterion = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
@@ -116,10 +118,11 @@ y_pred_scaled = valid_predict.data.numpy()
 y_pred = scaler.inverse_transform(y_pred_scaled)
 print(y_pred.shape)
 print(y_pred)
+input_data = {'energy': y_pred.tolist()}
 # y_pred is the  output tensor
 
 # dumping output to a new json file.
-with open('Backend/new.json', 'w') as f:
+with open('./model/new.json', 'w') as f:
     json.dump(input_data, f)
 
 print('done')
