@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import { UserAuth } from './context/AuthContext';
 import { useNavigate } from "react-router-dom";
@@ -40,9 +40,28 @@ function Analyze() {
         navigate('/dashboard');
     }
 
+    useEffect(() => {
+        fetch('http://localhost:8080/calculate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "appliances": ["Iron", "Iron", "Iron", "Iron"],
+                "time": [23, 7, 2, 3],
+                "user": { "uid": user.uid },
+                "emailVerified": user.emailVerified,
+                "wattage": [12, 32, 54, 32]
+            })
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+    }, [user]);
+
     return (
         <div>
-            <Navbar item1="Dashboard" item2="Guide" />
+            <Navbar item1="Dashboard" item2="Guide" item3="About" />
             <div className="form-wrap">
                 <div className="form-container">
                     {

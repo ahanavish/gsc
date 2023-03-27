@@ -1,23 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import GoogleButton from 'react-google-button';
 import { UserAuth } from './context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
     const { googleSignIn, user } = UserAuth();
-    const navigate = useNavigate();
+    const [successValue, setsuccessValue] = useState(false);
+    let navigate = useNavigate();
 
     const handleGoogleSignIn = async () => {
         try {
+            console.log(user);
             await googleSignIn();
         } catch (error) {
             console.log(error);
         }
     };
 
+
     useEffect(() => {
         if (user != null) {
-            navigate('/signin2');
+            fetch('http://localhost:8080/isexist', {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.status)
+                    setsuccessValue(data.status)
+                })
+                .catch(error => console.error(error));
+
+            console.log(successValue);
+            successValue === true &&
+                navigate('/dashboard');
+            successValue === false &&
+                navigate('/signin2');
         }
     }, [user]);
 

@@ -8,6 +8,8 @@ import Protected from './context/Protected';
 import SignIn from './SignIn';
 import SignIn2 from './SignIn2';
 import Analyze from './Analyze';
+import About from './About';
+import Predict from './Predict';
 
 class App extends Component {
     render() {
@@ -21,6 +23,8 @@ class App extends Component {
                         <Route exact path='/dashboard' element={<Protected><Dashboard /></Protected>} />
                         <Route exact path='/guide' element={<Protected><Guide /></Protected>} />
                         <Route exact path='/analyze' element={<Protected><Analyze /></Protected>} />
+                        <Route exact path='/about' element={<Protected><About /></Protected>} />
+                        <Route exact path='/predict' element={<Protected><Predict /></Protected>} />
                     </Routes>
                 </AuthContextProvider>
             </div>

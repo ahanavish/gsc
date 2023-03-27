@@ -1,20 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { UserAuth } from "./context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function SignIn2() {
     let navigate = useNavigate();
+    const [stateValue, setstateValue] = useState("");
+    const [membersValue, setmembersValue] = useState("");
     const { user } = UserAuth();
 
     const handleProceed = () => {
         let x = document.forms["signin2form"]["state"].value;
+        setstateValue(x);
         let y = document.forms["signin2form"]["familymembers"].value;
+        setmembersValue(y);
         if (x == "" || y == "") {
             alert("All fields must be filled out");
             return false;
         }
+
+        if (user != null) {
+            var a = null;
+            fetch('http://localhost:8080/initial', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "state": { stateValue },
+                    "members": { membersValue },
+                    "user": { "uid": user.uid, "name": user.displayName, "email": user.email },
+                    "emailVerified": user.emailVerified
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    a = data;
+                })
+                .catch(error => console.error(error));
+
+            if (a === true)
+                navigate('/dashboard');
+        }
+
+        console.log(stateValue);
         navigate('/dashboard');
     }
+
+    useEffect(() => {
+
+    }, [user]);
 
     return (
         <div className="form">
@@ -59,7 +93,7 @@ function SignIn2() {
                         <input type="number" id="familymembers" name="familymembers" min="1" required></input>
                     </div>
                     <div className="submitBtn">
-                        <button className="submitbutton" onClick={handleProceed}>Proceed</button>
+                        <button onClick={handleProceed}>Proceed</button>
                     </div>
                 </form>
             </div>

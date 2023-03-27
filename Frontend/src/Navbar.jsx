@@ -22,30 +22,42 @@ function Navbar(props) {
             </Link>
             <div className="options">
                 {
-                    props.item1 === "Guide" && props.item2 === "Analyze" &&
+                    props.item1 === "Guide" && props.item2 === "Analyze" && props.item3 === "About" && props.item4 === "Predict" &&
                     <div>
                         <Link to="/guide" style={{ textDecoration: 'none' }}><div className="item1">{props.item1}</div></Link>
                         <Link to="/analyze" style={{ textDecoration: 'none' }}><div className="item2">{props.item2}</div></Link>
+                        <Link to="/about" style={{ textDecoration: 'none' }}><div className="item3">{props.item3}</div></Link>
+                        <Link to="/predict" style={{ textDecoration: 'none' }}><div className="item3">{props.item4}</div></Link>
                         <div className="logout" onClick={handleSignOut}>Log Out</div>
                     </div>
                 }
                 {
-                    props.item1 === "Dashboard" && props.item2 === "Analyze" &&
+                    props.item1 === "Dashboard" && props.item2 === "Analyze" && props.item3 === "About" &&
                     <div>
                         <Link to="/dashboard" style={{ textDecoration: 'none' }}><div className="item1">{props.item1}</div></Link>
                         <Link to="/analyze" style={{ textDecoration: 'none' }}><div className="item2">{props.item2}</div></Link>
+                        <Link to="/about" style={{ textDecoration: 'none' }}><div className="item3">{props.item3}</div></Link>
                         <div className="logout" onClick={handleSignOut}>Log Out</div>
                     </div>
                 }
                 {
-                    props.item1 === "Dashboard" && props.item2 === "Guide" &&
+                    props.item1 === "Dashboard" && props.item2 === "Guide" && props.item3 === "About" &&
                     <div>
                         <Link to="/dashboard" style={{ textDecoration: 'none' }}><div className="item1">{props.item1}</div></Link>
                         <Link to="/guide" style={{ textDecoration: 'none' }}><div className="item2">{props.item2}</div></Link>
+                        <Link to="/about" style={{ textDecoration: 'none' }}><div className="item3">{props.item3}</div></Link>
                         <div className="logout" onClick={handleSignOut}>Log Out</div>
                     </div>
                 }
-
+                {
+                    props.item1 === "Dashboard" && props.item2 === "Guide" && props.item3 === "Analyze" &&
+                    <div>
+                        <Link to="/dashboard" style={{ textDecoration: 'none' }}><div className="item1">{props.item1}</div></Link>
+                        <Link to="/guide" style={{ textDecoration: 'none' }}><div className="item2">{props.item2}</div></Link>
+                        <Link to="/analyze" style={{ textDecoration: 'none' }}><div className="item3">{props.item3}</div></Link>
+                        <div className="logout" onClick={handleSignOut}>Log Out</div>
+                    </div>
+                }
             </div>
         </div>
     );

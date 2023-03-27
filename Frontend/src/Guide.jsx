@@ -6,7 +6,7 @@ import Navbar from './Navbar';
 function Guide() {
     return (
         <div>
-            <Navbar item1="Dashboard" item2="Analyze" />
+            <Navbar item1="Dashboard" item2="Analyze" item3="About" />
             <div className='guide-container'>
                 <YTCarousel />
                 <BlogCarousel />

@@ -91,7 +91,8 @@
 }
 
 .form-wrapper2 {
-    padding-top: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     background-color: #f3f3f3;
     height: 400px;
     width: 500px;
@@ -221,7 +222,7 @@ button:hover {
     font-weight: 500;
     font-size: 18px;
     margin-top: 20px;
-    width: 27%;
+    margin-right: 25px;
     font-family: 'Montserrat', sans-serif;
     justify-content: space-between;
 }
@@ -236,6 +237,15 @@ button:hover {
 }
 
 .item2 {
+    display: inline;
+    margin: 15px;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+.item3 {
     display: inline;
     margin: 15px;
     font-family: 'Montserrat', sans-serif;
@@ -398,7 +408,7 @@ button:hover {
 }
 
 .submitBtn {
-    margin: 20px auto;
+    margin: 10px auto;
 }
 
 .input1,
@@ -515,4 +525,110 @@ option:hover:before {
 
 .submit-button {
     font-family: 'Montserrat', sans-serif;
+}
+
+.column1row1 {
+    position: absolute;
+    left: 35px;
+    top: 90px;
+    border: 1px solid black;
+    height: 360px;
+    width: 350px;
+    border-radius: 10px;
+}
+
+.userImage {
+    position: relative;
+    margin: 40px auto;
+    height: 90px;
+    width: 90px;
+    background-color: #1f1717;
+    z-index: 1;
+    border-radius: 50%;
+}
+
+.userImage img {
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+}
+
+.userInfo h1 {
+    font-size: 15px;
+    padding-bottom: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+.userInfo {
+    position: relative;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.userInfo2 h1 {
+    font-size: 15px;
+    padding-bottom: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.userInfo2 {
+    position: relative;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 15px;
+}
+
+.editBtn {
+    margin-top: 10px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.chart {
+    position: absolute;
+    left: 50px;
+    margin-top: 200px;
+}
+
+.column1row2 {
+    position: absolute;
+    left: 35px;
+    top: 460px;
+    border: 1px solid black;
+    height: 140px;
+    width: 350px;
+    border-radius: 10px;
+}
+
+.column2row1 {
+    padding: 20px;
+    position: absolute;
+    left: 395px;
+    top: 90px;
+    border: 1px solid black;
+    height: 250px;
+    width: 827px;
+    border-radius: 10px;
+}
+
+.column2row2 {
+    padding: 20px;
+    position: absolute;
+    left: 395px;
+    top: 350px;
+    border: 1px solid black;
+    height: 250px;
+    width: 827px;
+    border-radius: 10px;
+}
+
+.btn {
+    position: absolute;
+    top: 100px;
+    left: 50px;
 }
