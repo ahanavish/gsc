@@ -1,5 +1,5 @@
 """Preprocessing the input data"""
-import sys
+# import sys
 import json
 import torch
 from saveload import LSTMNet
@@ -10,15 +10,16 @@ import numpy as np
 from torch.autograd import Variable
 import pandas as pd
 
-
-# Loading data
-
-
+'''
+# Loading data using API
 input_data_string = sys.argv[1]
 
 # Parse the JSON data into a Python object
 input_data = json.loads(input_data_string)
+'''
 
+
+'''
 # response_API = requests.get('http://localhost:8080/inference')
 # #print(response_API.status_code)
 # # data = response_API.text
@@ -33,11 +34,10 @@ input_data = json.loads(input_data_string)
 
 
 # json_file_path = "Backend/output.json"
-# 
 # with open(json_file_path, 'r') as j:
 #     contents = json.loads(j.read())
 #     print(contents)
-
+'''
 
 EPOCHS = 3000
 LEARNING_RATE = 0.001
@@ -76,14 +76,18 @@ Date = df1.rename({'Unnamed: 0': 'Date'}, axis=1, inplace=True)
 df1['Date'] = pd.to_datetime(df1['Date'])
 df1 = df1.dropna(axis=1)
 df1 = df1.groupby(df1['Date'], as_index=False).mean()
-state = "J&K"
+state = "Delhi"          # INPUT
 print(state)
-df_n = df1.loc[:10, ['Date', state]]
+df_n = df1.loc[:24, ['Date', state]]
 df_n['Date'] = pd.to_datetime(df_n['Date'])
 df_n.set_index('Date', inplace=True)
 
-# train = np.array(train)
-# print(train.shape)
+
+# Using the population dataset
+df_p = pd.read_csv('./model/RBIDATAstates_wise_population_Incomenew.csv')
+df_p.set_index('States_Union Territories',inplace=True)
+df_n[state] = df_n[state].mul(1000000)
+df_n[state] = df_n[state].div(df_p.loc[state][0])
 
 
 # Scaling the data
@@ -103,12 +107,12 @@ def sliding_windows(data, n_input):
     return np.array(x_train)
 
 
-prediction_window = 3
+prediction_window = 12
 x = sliding_windows(scaled_train, prediction_window)
 train_size = int(len(train) - prediction_window*3)
 X_train = Variable(torch.Tensor(np.array(x[:train_size])))
 # print(x)
-print(X_train.shape)
+# print(X_train.shape)
 
 
 # Predicting
@@ -118,12 +122,11 @@ y_pred_scaled = valid_predict.data.numpy()
 y_pred = scaler.inverse_transform(y_pred_scaled)
 print(y_pred.shape)
 print(y_pred)
-input_data = {'energy': y_pred.tolist()}
-# y_pred is the  output tensor
+input_data = {'energy': y_pred.tolist()}         # y_pred is the  output tensor
 
 # dumping output to a new json file.
-with open('./model/new.json', 'w') as f:
+with open('./output.json', 'w') as f:
     json.dump(input_data, f)
+    # print(x)
 
 print('done')
-
