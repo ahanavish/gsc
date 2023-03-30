@@ -9,7 +9,6 @@ module.exports = async function timeseries(uid){
     const data = snap.data();
     var check;
 
-    
     try{
         check = data.energy;
         if(check == undefined){
@@ -20,12 +19,17 @@ module.exports = async function timeseries(uid){
         return false
     }
     
+    const dbref = collection(db, 'default')
+    const docref = document(dbref, '2')
+    const snap2 = await getDoc(dbref);
+    const data2 = snap2.data();
+
     console.log(data.energy);
     if(check != undefined){
         const energy = data.energy;
         const day = energy.day;
         const engy = energy.engy;
-        return {day, engy};
+        return {day, engy, data2};
     }
 
 }
