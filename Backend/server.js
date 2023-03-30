@@ -2,8 +2,8 @@ const cors = require('cors');
 const express = require('express');
 const { collection, getFirestore, getDocs, where, orderBy, addDoc, query, doc, setDoc, getDoc, updateDoc, documentId } = require("firebase/firestore");
 
-const test = require('./translator.js');
 const Auth = require('./middleware/Auth.js');
+const translator = require('./translator.js');
 const Init = require('./controller/SetInit.js');
 const Values = require('./controller/Values.js');
 const IsExist = require('./controller/IsExist.js');
@@ -12,6 +12,7 @@ const UserLogic = require('./controller/UserLogic.js');
 const GetProfile = require('./controller/Dashboard.js');
 const GetTimeSeries = require('./controller/TimeSeries.js');
 const UpdateUserProfile = require('./controller/UpdateProfile.js');
+
 require('dotenv').config();
 const app = express();
 app.use(express.json(),
@@ -70,9 +71,9 @@ app.post('/calculate', Auth, async(req, res)=> {
 app.post('/inference', Auth, async (req,res)=>{
 
     const result = await Values(req.body.user.uid);
-    console.log(result);
-    const data = await test(result);
-    console.log(data, 'data2');
+    console.log(result, "nodejs");
+    const data = await translator(result);
+    console.log(data, 'data2 nodejs');
 
     return res.json({data: data});
 

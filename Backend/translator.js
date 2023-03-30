@@ -18,13 +18,13 @@ console.log(engy);*/
 module.exports = async function Model(inputData){
         
         const inputDataString = JSON.stringify(inputData);
-        console.log(inputDataString);
+        console.log(inputDataString, "nodejs");
         // Run the Python script and specify the output file
         const pythonProcess = spawn('python', ['model/main.py', inputDataString]);
 
         // Handle output from the script
         pythonProcess.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
+        console.log(`stdout: ${data} nodejs`);
         });
 
         pythonProcess.stderr.on('data', (data) => {
@@ -48,6 +48,6 @@ module.exports = async function Model(inputData){
                         });
                 });
 
-        console.log(data_n, 'data_n');
+        console.log(data_n, 'data_n nodejs mai');
         return data_n;
 }

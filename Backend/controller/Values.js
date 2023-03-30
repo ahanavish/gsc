@@ -11,7 +11,9 @@ module.exports = async function GetValues(uid){
     if(snap.exists()){
         const data = snap.data();
         const energy = data.energy;
-        return energy;
+        const members = data.members;
+        const state = data.state;
+        return {energy, state, members};
     }else{
         return false;
     }
