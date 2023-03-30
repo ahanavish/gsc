@@ -1,22 +1,22 @@
-"""Preprocessing the input data"""
+"""Preprocessing the input data using model 2"""
 # import sys
 import json
 import torch
-from saveload import LSTMNet
+# from saveload import LSTMNet
 from sklearn.preprocessing import MinMaxScaler
 # from sklearn.metrics import mean_squared_error
-# import torch.nn as nn
+import torch.nn as nn
 import numpy as np
-from torch.autograd import Variable
+# from torch.autograd import Variable
 import pandas as pd
-from datetime import date, datetime
-from datetime import datetime
-from json import dumps
+from new_model import AirModel
+import torch.optim as optim
+# import torch.utils.data as data
+import matplotlib.pyplot as plt
 
 '''
 # Loading data using API
 input_data_string = sys.argv[1]
-
 # Parse the JSON data into a Python object
 input_data = json.loads(input_data_string)
 '''
@@ -34,38 +34,11 @@ input_data = json.loads(input_data_string)
 # response_API.raise_for_status()  # raises exception when not a 2xx response
 # if response_API.status_code != 204:
 #     print(response_API.json())
-
-
 # json_file_path = "Backend/output.json"
 # with open(json_file_path, 'r') as j:
 #     contents = json.loads(j.read())
 #     print(contents)
 '''
-
-EPOCHS = 3000
-LEARNING_RATE = 0.001
-DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
-INPUT_SIZE = 1
-HIDDEN_SIZE = 200
-NUM_LAYERS = 1
-model = LSTMNet(INPUT_SIZE, HIDDEN_SIZE, NUM_LAYERS)
-model.load_state_dict(torch.load("./model/fina_model.pt"))
-criterion = torch.nn.MSELoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
-
-
-# INPUT VALUES
-# input1 = state
-# input2 = no of people in the family
-# input3 = total power consumption
-
-# option to choose the states will have to implemented
-# states = ['Punjab', 'Haryana', 'Rajasthan', 'Delhi', 'UP', 'Uttarakhand',
-#           'HP', 'J&K', 'Chandigarh', 'Chhattisgarh', 'Gujarat', 'MP',
-#           'Maharashtra', 'Goa', 'DNH', 'Andhra Pradesh', 'Telangana',
-#           'Karnataka', 'Kerala', 'Tamil Nadu', 'Pondy', 'Bihar', 'Jharkhand',
-#           'Odisha', 'West Bengal', 'Sikkim', 'Arunachal Pradesh', 'Assam',
-#           'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Tripura']
 
 
 #  Preprocessing
@@ -79,20 +52,20 @@ Date = df1.rename({'Unnamed: 0': 'Date'}, axis=1, inplace=True)
 df1['Date'] = pd.to_datetime(df1['Date'])
 df1 = df1.dropna(axis=1)
 df1 = df1.groupby(df1['Date'], as_index=False).mean()
-state = "Delhi"          # INPUT
+state = "Haryana"          # INPUT
 print(state)
 number = 30
 df_n = df1.loc[:number, ['Date', state]]
 df_n['Date'] = pd.to_datetime(df_n['Date'])
 df_n.set_index('Date', inplace=True)
-
+print(df_n)
 
 # Using the population dataset
 df_p = pd.read_csv('./model/RBIDATAstates_wise_population_Incomenew.csv')
 df_p.set_index('States_Union Territories', inplace=True)
 df_n[state] = df_n[state].mul(1000000)
 df_n[state] = df_n[state].div(df_p.loc[state][0])
-
+timeseries = df_n[[state]].values.astype('float32')
 
 # Scaling the data
 train = df_n.copy()
@@ -101,38 +74,69 @@ scaler.fit(train)
 scaled_train = scaler.transform(train)
 
 
-# Creating the sliding window funtion
-def sliding_windows(data, n_input):
-    x_train = []
-    # y_train = []
-    for i in range(n_input, len(data)):
-        x_train.append(data[i-n_input:i])
-        # y_train.append(data[i])
-    return np.array(x_train)
+# train-test split for time series
+train_size = int(len(timeseries) * 0.67)
+# test_size = len(timeseries) - train_size
+train =  timeseries[:train_size]
 
 
-prediction_window = 12
-x = sliding_windows(scaled_train, prediction_window)
-train_size = int(len(train) - prediction_window*3)
-X_train = Variable(torch.Tensor(np.array(x[:train_size])))
-# print(x)
-# print(X_train.shape)
+def create_dataset(dataset, lookback):
+    """Transform a time series into a prediction dataset
+    Args:
+        dataset: A numpy array of time series, first dimension is the time steps
+        lookback: Size of window for prediction
+    """
+    X = []
+    for i in range(len(dataset)-lookback):
+        feature = dataset[i:i+lookback]
+        # target = dataset[i+1:i+lookback+1]
+        X.append(feature)
+        # y.append(target)
+    return torch.Tensor(X)
 
 
+lookback = 12
+
+X_train = create_dataset(train, lookback=lookback)
+# print(X_train)
 # Predicting
-valid_predict = model(X_train)
+
+
+model = AirModel()
+model.load_state_dict(torch.load("./model/model_new.pt"))
+optimizer = optim.Adam(model.parameters())
+loss_fn = nn.MSELoss()
+
+y_pred = model(X_train)
+# valid_predict = model(X_train)
 # print(valid_predict)
-y_pred_scaled = valid_predict.data.numpy()
-y_pred = scaler.inverse_transform(y_pred_scaled)  # y_pred is the output tensor
-# print(y_pred.shape)
-# print(y_pred)
-# print(len(y_pred))
+# y_pred_scaled = valid_predict.data.numpy()
+# y_pred = scaler.inverse_transform(y_pred_scaled)
+print(y_pred.shape)
+print(y_pred)
+input_data = {'energy': y_pred.tolist()}         # y_pred is the  output tensor
 
 
+# plotting
+with torch.no_grad():
+    # shift train predictions for plotting
+    # train_plot = np.ones_like(timeseries) * np.nan
+    # y_pred = model(X_train)
+    y_pred = y_pred[:, -1, :]
+    # train_plot[lookback:train_size] = model(X_train)[:, -1, :]
+    # shift test predictions for plotting
+    test_plot = np.ones_like(timeseries) * np.nan
+    test_plot[lookback:train_size] = model(X_train)[:, -1, :]
+
+# plt.plot(timeseries)
+# plt.plot(train_plot, c='r')
+plt.plot(test_plot, c='g')
+plt.show()
+
+print(len(y_pred))
 json_data = df1['Date'][number:number+len(y_pred)]
 json_data = json_data.astype(str)
 input_data = {"date": json_data.tolist(), 'energy': y_pred.tolist()}
-
 
 # dumping output to a new json file.
 with open('./output.json', 'w') as f:
