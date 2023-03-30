@@ -16,13 +16,14 @@ module.exports = async function UserLogic(uid, appliance, result){
             }
 
             var date = new Date();
-            var day = date.getDate();
-            console.log(day);
+
+            const day = new Date();
+            const formattedDate = date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
 
             // get energy value from db using uid
             const snap = await getDoc(doc(db, 'users', `${uid}`));
             const data = snap.data();
-
+            
             const energy = data.energy
             if( (energy) != undefined){
                 var dayArr = energy.day;
@@ -48,7 +49,7 @@ module.exports = async function UserLogic(uid, appliance, result){
 
             }else{
                 // set new values
-                const engylis = {day:[day],engy:[engy]}
+                const engylis = {day:[formattedDate],engy:[engy]}
 
                 console.log(energy, 'energy');
 
