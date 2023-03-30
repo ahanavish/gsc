@@ -3,6 +3,7 @@ const db = require('../config.js')
 const { collection, getFirestore, getDoc, query, where, orderBy, addDoc, doc, setDoc} = require("firebase/firestore");
 
 module.exports = async function timeseries(uid){
+    
     // return day and engy
     const snap = await getDoc(doc(db, 'users', `${uid}`));
     const data = snap.data();

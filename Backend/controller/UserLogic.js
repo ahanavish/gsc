@@ -3,6 +3,7 @@ const db = require('../config.js')
 const { collection, getFirestore, getDoc, query, where, orderBy, addDoc, doc, setDoc} = require("firebase/firestore");
 
 module.exports = async function UserLogic(uid, appliance, result){
+
     try{
         const dbRef = collection(db, "users");
         const snap = await getDoc(doc(db, 'users', `${uid}`));
@@ -59,9 +60,6 @@ module.exports = async function UserLogic(uid, appliance, result){
                     merge: true
                 })
             }
-
-            
-
         }else{
 
             /*var engy = {}
@@ -84,4 +82,5 @@ module.exports = async function UserLogic(uid, appliance, result){
         console.log(e);
         return false;
     }
+    
 }

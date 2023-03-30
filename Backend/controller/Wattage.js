@@ -3,6 +3,7 @@ const db = require('../config.js')
 const { collection, getFirestore, getDoc, query, where, orderBy, addDoc, doc, setDoc} = require("firebase/firestore");
 
 module.exports = async function getWattage(){
+
     try{
         const dbRef = collection(db, "default");
         const snap = await getDoc(doc(db, 'default', `1`));
@@ -18,4 +19,5 @@ module.exports = async function getWattage(){
     }catch(err){
         console.log(err);
     }
+    
 }
