@@ -20,8 +20,8 @@ module.exports = async function timeseries(uid){
     }
     
     const dbref = collection(db, 'default')
-    const docref = document(dbref, '2')
-    const snap2 = await getDoc(dbref);
+    const docref = doc(dbref, 'NAPvgeEwIeKgfcR4QttS')
+    const snap2 = await getDoc(docref);
     const data2 = snap2.data();
 
     console.log(data.energy);
