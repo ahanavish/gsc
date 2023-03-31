@@ -1,71 +1,56 @@
 """Preprocessing the input data using model 2"""
-# import sys
+import sys
 import json
+import datetime
 import torch
-# from saveload import LSTMNet
-from sklearn.preprocessing import MinMaxScaler
-# from sklearn.metrics import mean_squared_error
 import torch.nn as nn
+import torch.optim as optim
+from sklearn.preprocessing import MinMaxScaler
 import numpy as np
-# from torch.autograd import Variable
 import pandas as pd
 from new_model import AirModel
-import torch.optim as optim
-# import torch.utils.data as data
-import matplotlib.pyplot as plt
 
-'''
+
 # Loading data using API
 input_data_string = sys.argv[1]
+
 # Parse the JSON data into a Python object
 input_data = json.loads(input_data_string)
-'''
+# print(input_data)
+energy_arr = input_data['energy']['engy']
+day_arr = input_data['energy']['day']
+state = input_data['state']
+member_no = input_data['members']
 
-
-'''
-# response_API = requests.get('http://localhost:8080/inference')
-# #print(response_API.status_code)
-# # data = response_API.text
-# # parse_json = json.loads(data)
-# # info = parse_json['description']
-# # print("Info about API:\n", info)
-# # key = parse_json['date']['engy']
-# # print("\nDescription about the key:\n",key)
-# response_API.raise_for_status()  # raises exception when not a 2xx response
-# if response_API.status_code != 204:
-#     print(response_API.json())
-# json_file_path = "Backend/output.json"
-# with open(json_file_path, 'r') as j:
-#     contents = json.loads(j.read())
-#     print(contents)
-'''
-
-
-#  Preprocessing
-
-# Json to csv conversion
-# df = pd.read_json(json_string)
-# df.to_csv('file.csv')
-
-df1 = pd.read_csv("/Users/harshitarathee/Downloads/archive-2/dataset_tk.csv")
-Date = df1.rename({'Unnamed: 0': 'Date'}, axis=1, inplace=True)
-df1['Date'] = pd.to_datetime(df1['Date'])
-df1 = df1.dropna(axis=1)
-df1 = df1.groupby(df1['Date'], as_index=False).mean()
-state = "Haryana"          # INPUT
+print(energy_arr)
+print(day_arr)
 print(state)
-number = 30
-df_n = df1.loc[:number, ['Date', state]]
-df_n['Date'] = pd.to_datetime(df_n['Date'])
-df_n.set_index('Date', inplace=True)
+print(member_no)
+print(len(energy_arr))
+print(len(day_arr))
+
+
+column_values = ['Date', state]
+
+
+# Calling DataFrame constructor after zipping
+# both lists, with columns specified
+df_n = pd.DataFrame(list(zip(day_arr, energy_arr)), columns=['Date', state])
+
 print(df_n)
+df_n['Date'] = pd.to_datetime(df_n['Date'])
+df_t = df_n.copy()
+df_n.set_index('Date', inplace=True)
+
 
 # Using the population dataset
-df_p = pd.read_csv('./model/RBIDATAstates_wise_population_Incomenew.csv')
-df_p.set_index('States_Union Territories', inplace=True)
-df_n[state] = df_n[state].mul(1000000)
-df_n[state] = df_n[state].div(df_p.loc[state][0])
+# df_p = pd.read_csv('./model/RBIDATAstates_wise_population_Incomenew.csv')
+# df_p.set_index('States_Union Territories', inplace=True)
+# df_n[state] = df_n[state].mul(1000000)
+# df_n[state] = df_n[state].div(df_p.loc[state][0])
+df_n[state] = df_n[state].div(int(member_no))
 timeseries = df_n[[state]].values.astype('float32')
+
 
 # Scaling the data
 train = df_n.copy()
@@ -77,7 +62,7 @@ scaled_train = scaler.transform(train)
 # train-test split for time series
 train_size = int(len(timeseries) * 0.67)
 # test_size = len(timeseries) - train_size
-train =  timeseries[:train_size]
+train = timeseries[:train_size]
 
 
 def create_dataset(dataset, lookback):
@@ -89,58 +74,82 @@ def create_dataset(dataset, lookback):
     X = []
     for i in range(len(dataset)-lookback):
         feature = dataset[i:i+lookback]
-        # target = dataset[i+1:i+lookback+1]
         X.append(feature)
-        # y.append(target)
+
     return torch.Tensor(X)
 
 
-lookback = 12
+lookback = 4
 
 X_train = create_dataset(train, lookback=lookback)
 # print(X_train)
-# Predicting
 
-
+# model
 model = AirModel()
 model.load_state_dict(torch.load("./model/model_new.pt"))
 optimizer = optim.Adam(model.parameters())
 loss_fn = nn.MSELoss()
 
+# predicting
 y_pred = model(X_train)
 # valid_predict = model(X_train)
 # print(valid_predict)
 # y_pred_scaled = valid_predict.data.numpy()
 # y_pred = scaler.inverse_transform(y_pred_scaled)
 print(y_pred.shape)
-print(y_pred)
-input_data = {'energy': y_pred.tolist()}         # y_pred is the  output tensor
+print(type(y_pred))
+y_pred = y_pred * int(member_no)
+# y_pred is the  output tensor
+print(type(y_pred))
+print(type(member_no))
+print("lne of ypred")
+print(len(y_pred))
+date = df_t['Date'][df_t.shape[0]-1]  # last element of day_arr
+new_date = []
+for i in range(len(y_pred)):
+    date += datetime.timedelta(days=1)
+    new_date.append(date.to_pydatetime().strftime("%Y-%m-%d"))
+    # print(date)
+# new_date
 
 
-# plotting
+# formatting
 with torch.no_grad():
     # shift train predictions for plotting
-    # train_plot = np.ones_like(timeseries) * np.nan
+    train_plot = np.ones_like(timeseries) * np.nan
     # y_pred = model(X_train)
     y_pred = y_pred[:, -1, :]
-    # train_plot[lookback:train_size] = model(X_train)[:, -1, :]
+    train_plot[lookback:train_size] = model(X_train)[:, -1, :]
     # shift test predictions for plotting
-    test_plot = np.ones_like(timeseries) * np.nan
-    test_plot[lookback:train_size] = model(X_train)[:, -1, :]
+    # test_plot = np.ones_like(timeseries) * np.nan
+    # test_plot[lookback:train_size] = model(X_train)[:, -1, :]
+    print(train_plot)
+    print(train_plot.shape)
+    arr_fin = []
+    num = 0
+    for i in train_plot:
+        if not pd.isna(i[0]):
+            arr_fin.append(num)
+        num += 1
+# print(arr_fin)
+train_plot = train_plot[arr_fin]
+train_plot = train_plot*int(member_no)
+# print(train_plot)
 
+input_data = {"date": new_date, 'energy': train_plot.tolist()}
+
+'''
+# plotting
 # plt.plot(timeseries)
 # plt.plot(train_plot, c='r')
 plt.plot(test_plot, c='g')
 plt.show()
 
-print(len(y_pred))
-json_data = df1['Date'][number:number+len(y_pred)]
-json_data = json_data.astype(str)
-input_data = {"date": json_data.tolist(), 'energy': y_pred.tolist()}
+'''
 
 # dumping output to a new json file.
 with open('./output.json', 'w') as f:
     json.dump(input_data, f)
 
 
-print('done')
+print('done1')

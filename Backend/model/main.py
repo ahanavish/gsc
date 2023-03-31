@@ -1,5 +1,5 @@
 """Preprocessing the input data"""
-# import sys
+import sys
 import json
 import torch
 from saveload import LSTMNet
@@ -9,39 +9,39 @@ from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 from torch.autograd import Variable
 import pandas as pd
-from datetime import date, datetime
-from datetime import datetime
-from json import dumps
-
-'''
+# from datetime import date, datetime
+# from datetime import datetime
+# from json import dumps
+# from pandas import json_normalize
+import datetime
 # Loading data using API
 input_data_string = sys.argv[1]
 
 # Parse the JSON data into a Python object
 input_data = json.loads(input_data_string)
-'''
+# print(input_data)
+energy_arr = input_data['energy']['engy']
+day_arr = input_data['energy']['day']
+state = input_data['state']
+member_no = input_data['members']
+
+print(energy_arr)
+print(day_arr)
+print(state)
+print(member_no)
+print(len(energy_arr))
+print(len(day_arr))
 
 
-'''
-# response_API = requests.get('http://localhost:8080/inference')
-# #print(response_API.status_code)
-# # data = response_API.text
-# # parse_json = json.loads(data)
-# # info = parse_json['description']
-# # print("Info about API:\n", info)
-# # key = parse_json['date']['engy']
-# # print("\nDescription about the key:\n",key)
-# response_API.raise_for_status()  # raises exception when not a 2xx response
-# if response_API.status_code != 204:
-#     print(response_API.json())
+column_values = ['Date', state]
+print("a")
 
+# Calling DataFrame constructor after zipping
+# both lists, with columns specified
+df_n = pd.DataFrame(list(zip(day_arr, energy_arr)), columns=['Date', state])
+# df_n = pd.DataFrame(data=energy_arr, columns=column_values)
 
-# json_file_path = "Backend/output.json"
-# with open(json_file_path, 'r') as j:
-#     contents = json.loads(j.read())
-#     print(contents)
-'''
-
+print('b')
 EPOCHS = 3000
 LEARNING_RATE = 0.001
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -53,37 +53,9 @@ model.load_state_dict(torch.load("./model/fina_model.pt"))
 criterion = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
-
-# INPUT VALUES
-# input1 = state
-# input2 = no of people in the family
-# input3 = total power consumption
-
-# option to choose the states will have to implemented
-# states = ['Punjab', 'Haryana', 'Rajasthan', 'Delhi', 'UP', 'Uttarakhand',
-#           'HP', 'J&K', 'Chandigarh', 'Chhattisgarh', 'Gujarat', 'MP',
-#           'Maharashtra', 'Goa', 'DNH', 'Andhra Pradesh', 'Telangana',
-#           'Karnataka', 'Kerala', 'Tamil Nadu', 'Pondy', 'Bihar', 'Jharkhand',
-#           'Odisha', 'West Bengal', 'Sikkim', 'Arunachal Pradesh', 'Assam',
-#           'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Tripura']
-
-
-#  Preprocessing
-
-# Json to csv conversion
-# df = pd.read_json(json_string)
-# df.to_csv('file.csv')
-
-df1 = pd.read_csv("/Users/harshitarathee/Downloads/archive-2/dataset_tk.csv")
-Date = df1.rename({'Unnamed: 0': 'Date'}, axis=1, inplace=True)
-df1['Date'] = pd.to_datetime(df1['Date'])
-df1 = df1.dropna(axis=1)
-df1 = df1.groupby(df1['Date'], as_index=False).mean()
-state = "Delhi"          # INPUT
-print(state)
-number = 30
-df_n = df1.loc[:number, ['Date', state]]
+print(df_n)
 df_n['Date'] = pd.to_datetime(df_n['Date'])
+df_t = df_n.copy()
 df_n.set_index('Date', inplace=True)
 
 
@@ -111,7 +83,7 @@ def sliding_windows(data, n_input):
     return np.array(x_train)
 
 
-prediction_window = 12
+prediction_window = 5
 x = sliding_windows(scaled_train, prediction_window)
 train_size = int(len(train) - prediction_window*3)
 X_train = Variable(torch.Tensor(np.array(x[:train_size])))
@@ -126,12 +98,25 @@ y_pred_scaled = valid_predict.data.numpy()
 y_pred = scaler.inverse_transform(y_pred_scaled)  # y_pred is the output tensor
 # print(y_pred.shape)
 # print(y_pred)
-# print(len(y_pred))
+y_pred = y_pred * int(member_no)
+print(type(y_pred))
+print(type(member_no))
+print(len(y_pred))
 
 
-json_data = df1['Date'][number:number+len(y_pred)]
-json_data = json_data.astype(str)
-input_data = {"date": json_data.tolist(), 'energy': y_pred.tolist()}
+date = df_t['Date'][df_t.shape[0]-1]  # last element of day_arr
+new_date = []
+for i in range(len(y_pred)):
+    date += datetime.timedelta(days=1)
+    new_date.append(date.to_pydatetime().strftime("%Y-%m-%d"))
+    # print(date)
+# new_date
+input_data = {"date": new_date, 'energy': y_pred.tolist()}
+
+
+# json_data = df1['Date'][number:number+len(y_pred)]
+# json_data = json_data.astype(str)
+# input_data = {"date": json_data.tolist(), 'energy': y_pred.tolist()}
 
 
 # dumping output to a new json file.
