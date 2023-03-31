@@ -27,13 +27,19 @@ module.exports = async function timeseries(uid) {
 
     console.log(data2.atav);
     console.log(data.energy);
+    console.log(data.MaxDuration);
+    console.log(data.MaxPower);
+
     if (check != undefined) {
+
+        const MaxD = data.MaxDuration
+        const MaxP = data.MaxPower
         const state = data.state;
         console.log(state, ' state');
         const energy = data.energy;
         const day = energy.day;
         const engy = energy.engy;
-        return { state, day, engy, data2 };
+        return { MaxD, MaxP, state, day, engy, data2 };
     }
 
 }

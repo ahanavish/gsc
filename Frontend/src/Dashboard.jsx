@@ -35,6 +35,8 @@ function Dashboard() {
     const [dayArray, setdayArray] = useState(dArray);
     const [engyArray, setengyArray] = useState(eArray);
     const [graph2, setgraph2] = useState({});
+    const [maxPower, setmaxPower] = useState("");
+    const [maxDuration, setmaxDuration] = useState("");
 
     const [stateValue, setstateValue] = useState("");
     const [membersValue, setmembersValue] = useState("");
@@ -53,6 +55,8 @@ function Dashboard() {
                 setdayArray(data.data.day);
                 setengyArray(data.data.engy);
                 setgraph2(data.data.data2.atav);
+                setmaxPower(data.data.MaxP);
+                setmaxDuration(data.data.MaxD);
             })
             .catch(error => console.error(error));
 
@@ -80,15 +84,15 @@ function Dashboard() {
     var total_power_consumed2 = Math.floor(total_power_consumed * 100) / 100;
     var user_average = total_power_consumed2 / len1;
 
-    // console.log(graph2);
-    // console.log(graph2.Dates);
-    // console.log(graph2[`${stateValue}`]);
-    // data2 = [["Date", "Consumption of Electricity"]];
-    // var len2 = graph2[`${stateValue}`].length;
-    // for (var j = 0; j < len2; j++) {
-    //     var a = [graph2.Dates[j], graph2[`${stateValue}`][j]]
-    //     data2.push(a);
-    // }
+    console.log(graph2);
+    console.log(graph2.Dates);
+    console.log(graph2[`${stateValue}`]);
+    data2 = [["Date", "Consumption of Electricity"]];
+    var len2 = graph2[`${stateValue}`].length;
+    for (var j = 0; j < len2; j++) {
+        var a = [graph2.Dates[j], graph2[`${stateValue}`][j]]
+        data2.push(a);
+    }
 
     return (
         <div className="dash">
@@ -109,8 +113,8 @@ function Dashboard() {
                 <div className="userInfo2">
                     <h1>Total power consumed: {total_power_consumed2} </h1>
                     <h1>User Average: {user_average} </h1>
-                    <h1>Appliance consuming max power: </h1>
-                    <h1>Appliance consumed for max duration: </h1>
+                    <h1>Appliance consuming max power: {maxPower} </h1>
+                    <h1>Appliance consumed for max duration: {maxDuration} </h1>
                 </div>
             </div>
             <div className="column2row1">
@@ -123,13 +127,13 @@ function Dashboard() {
                 />
             </div>
             <div className="column2row2">
-                {/* <Chart
+                <Chart
                     chartType="Line"
                     width="100%"
                     height="200px"
                     data={data2}
                     options={options2}
-                /> */}
+                />
             </div>
         </div>
     );
