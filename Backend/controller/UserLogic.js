@@ -67,7 +67,9 @@ module.exports = async function UserLogic(uid, appliance, result){
 
                 await setDoc(doc(dbRef, `${uid}`), {
                     // make it so that it has a new id for each entry
-                    energy : engylis
+                    energy : engylis,
+                    MaxDuration: MaxDuration,
+                    MaxPower: MaxPower
 
                 }, {
                     merge: true

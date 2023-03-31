@@ -30,6 +30,10 @@ app.post('/calculate', Auth, async(req, res)=> {
     const members = req.body.members;
     console.log(req.body);
 
+    const maxVal = Math.max(...time);
+    const index = time.indexOf(maxVal);
+    const MaxDuration = appliances[index];
+
     // nesting user session variable
     var {uid, name, email, emailVerified} = user;
 
@@ -61,8 +65,13 @@ app.post('/calculate', Auth, async(req, res)=> {
         res.send({error: 'Please provide time and power'});
     }
     console.log(result, 'result');
+
+    const maxVal2 = Math.max(...result);
+    const index2 = time.indexOf(maxVal2);
+    const MaxPower = appliances[index2];
+
     // if the state , members is not entered, then it returns false, frontend logic to redirect to initial 
-    const status = await UserLogic(uid, appliances, result);
+    const status = await UserLogic(uid, appliances, result, MaxDuration, MaxPower);
 
     res.send({status: status});
 
@@ -119,6 +128,7 @@ app.get('/timeseries', async (req,res)=>{
 
 })
 
+// redundant
 app.patch('/updateprofile', Auth, async (req,res)=>{ // PUT is to update the whole document, PATCH is to update a part of the document
     console.log(req.body);
     const { name } = req.body.name;
