@@ -4,45 +4,41 @@ import { useNavigate } from "react-router-dom";
 
 function SignIn2() {
     let navigate = useNavigate();
-    const [stateValue, setstateValue] = useState("");
-    const [membersValue, setmembersValue] = useState("");
+    // const [stateValue, setstateValue] = useState("");
+    // const [membersValue, setmembersValue] = useState("");
     const { user } = UserAuth();
 
     const handleProceed = () => {
         let x = document.forms["signin2form"]["state"].value;
-        setstateValue(x);
+        // setstateValue(x);
         let y = document.forms["signin2form"]["familymembers"].value;
-        setmembersValue(y);
-        if (x == "" || y == "") {
+        // setmembersValue(y);
+        if (x === "" || y === "") {
             alert("All fields must be filled out");
             return false;
         }
 
         if (user != null) {
-            var a = null;
+            var exists = null;
             fetch('http://localhost:8080/initial', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "state": { stateValue },
-                    "members": { membersValue },
+                    "state": x,
+                    "members": y,
                     "user": { "uid": user.uid, "name": user.displayName, "email": user.email },
                     "emailVerified": user.emailVerified
                 })
             })
                 .then(response => response.json())
                 .then(data => {
-                    a = data;
+                    exists = data;
                 })
                 .catch(error => console.error(error));
-
-            if (a === true)
-                navigate('/dashboard');
         }
 
-        console.log(stateValue);
         navigate('/dashboard');
     }
 
@@ -59,34 +55,34 @@ function SignIn2() {
                     <div className="inputs">
                         <label for="state">Which state do you live in?</label>
                         <select name="state" id="state" required>
-                            <option value="andhrapradesh">Andhra Pradesh</option>
-                            <option value="arunachalpradesh">Arunachal Pradesh</option>
-                            <option value="assam">Assam</option>
-                            <option value="bihar">Bihar</option>
-                            <option value="chhattisgarh">Chhattisgarh</option>
-                            <option value="goa">Goa</option>
-                            <option value="gujarat">Gujarat</option>
-                            <option value="haryana">Haryana</option>
-                            <option value="himachalpradesh">Himachal Pradesh</option>
-                            <option value="jharkhand">Jharkhand</option>
-                            <option value="karnataka">Karnataka</option>
-                            <option value="kerala">Kerala</option>
-                            <option value="madhyapradesh">Madhya Pradesh</option>
-                            <option value="maharashtra">Maharashtra</option>
-                            <option value="manipur">Manipur</option>
-                            <option value="meghalaya">Meghalaya</option>
-                            <option value="mizoram">Mizoram</option>
-                            <option value="nagaland">Nagaland</option>
-                            <option value="odisha">Odisha</option>
-                            <option value="punjab">Punjab</option>
-                            <option value="rajasthan">Rajasthan</option>
-                            <option value="sikkim">Sikkim</option>
-                            <option value="tamilnadu">Tamil Nadu</option>
-                            <option value="telangana">Telangana</option>
-                            <option value="tripura">Tripura</option>
-                            <option value="uttarpradesh">Uttar Pradesh</option>
-                            <option value="uttarakhand">Uttarakhand</option>
-                            <option value="westbengal">West Bengal</option>
+                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                            <option value="Assam">Assam</option>
+                            <option value="Bihar">Bihar</option>
+                            <option value="Chhattisgarh">Chhattisgarh</option>
+                            <option value="Goa">Goa</option>
+                            <option value="Gjarat">Gujarat</option>
+                            <option value="Haryana">Haryana</option>
+                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                            <option value="Jharkhand">Jharkhand</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Kerala">Kerala</option>
+                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Manipur">Manipur</option>
+                            <option value="Meghalaya">Meghalaya</option>
+                            <option value="Mizoram">Mizoram</option>
+                            <option value="Nagaland">Nagaland</option>
+                            <option value="Odisha">Odisha</option>
+                            <option value="Punjab">Punjab</option>
+                            <option value="Rajasthan">Rajasthan</option>
+                            <option value="Sikkim">Sikkim</option>
+                            <option value="Tamilnadu">Tamil Nadu</option>
+                            <option value="Telangana">Telangana</option>
+                            <option value="Tripura">Tripura</option>
+                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                            <option value="Uttarakhand">Uttarakhand</option>
+                            <option value="West Bengal">West Bengal</option>
                         </select>
 
                         <label for="familymembers">How many people do you have in your family?</label>

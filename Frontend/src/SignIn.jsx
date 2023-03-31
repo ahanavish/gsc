@@ -10,7 +10,7 @@ const SignIn = () => {
 
     const handleGoogleSignIn = async () => {
         try {
-            console.log(user);
+            // console.log(user);
             await googleSignIn();
         } catch (error) {
             console.log(error);
@@ -20,23 +20,23 @@ const SignIn = () => {
 
     useEffect(() => {
         if (user != null) {
-            fetch('http://localhost:8080/isexist', {
+            fetch(('http://localhost:8080/isexist?uid=' + user.uid), {
                 method: 'GET'
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.status)
+                    // console.log(data.status)
                     setsuccessValue(data.status)
                 })
                 .catch(error => console.error(error));
-
-            console.log(successValue);
-            successValue === true &&
-                navigate('/dashboard');
-            successValue === false &&
-                navigate('/signin2');
         }
     }, [user]);
+
+    // console.log(successValue);
+    if (successValue)
+        navigate('/dashboard');
+    else
+        navigate('/signin2');
 
     return (
         <div className="form">

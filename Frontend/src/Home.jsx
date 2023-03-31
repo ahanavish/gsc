@@ -7,9 +7,9 @@ function Home() {
             <div className="content">
                 <video autoPlay muted playsInline loop className="background-clip" src="https://globalfishingwatch.org/wp-content/uploads/fishing-map-release-home-header-1600-169-1.mp4">
                 </video>
-                <h1>Project Name</h1>
+                <h1>WattWise</h1>
                 <Link to="/signin">
-                    <button>Let's Save Energy</button>
+                    <button>Let's be wise with Electricity</button>
                 </Link>
             </div>
         </div>

@@ -27,41 +27,52 @@ function Analyze() {
         setinputList([...inputList, { appName: '', wattage: '', hours: '' }]);
     }
 
+    var appArray = [];
+    var timeArray = [];
+    var wattArray = [];
+
     const handleSubmit = () => {
         let list = inputList;
 
         for (var i = 0; i < list.length; i++) {
-            if (list[i].appName == "" || list[i].hours == "") {
-                alert("All fields must be filled out");
-                return false;
-            }
+            appArray.push(list[i].appName);
+            timeArray.push(list[i].hours);
+            if (list[i].wattage !== "")
+                wattArray.push(list[i].wattage)
+            else
+                wattArray.push("");
         }
 
+        // console.log(appArray);
+        // console.log(wattArray);
+        // console.log(timeArray);
         navigate('/dashboard');
-    }
 
-    useEffect(() => {
+        // useEffect(() => {
         fetch('http://localhost:8080/calculate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "appliances": ["Iron", "Iron", "Iron", "Iron"],
-                "time": [23, 7, 2, 3],
+                "appliances": appArray,
+                "time": timeArray,
                 "user": { "uid": user.uid },
                 "emailVerified": user.emailVerified,
-                "wattage": [12, 32, 54, 32]
+                "wattage": wattArray
             })
         })
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(error => console.error(error));
-    }, [user]);
+        // }, [appArray, timeArray, wattArray]);
+
+
+    }
 
     return (
         <div>
-            <Navbar item1="Dashboard" item2="Guide" item3="About" />
+            <Navbar item1="Dashboard" item2="Guide" item3="Predict" item4="About" />
             <div className="form-wrap">
                 <div className="form-container">
                     {
@@ -71,17 +82,17 @@ function Analyze() {
                                     <div className="input1" >
                                         <label for="appName" className="labelling">Appliance type</label>
                                         <select id="appName" name="appName" onChange={e => handleinputchange(e, i)} required>
-                                            <option value="washingmachine">Washing Machine</option>
-                                            <option value="refrigerator">Refrigerator</option>
-                                            <option value="television">Television</option>
-                                            <option value="mobilephone">Mobile Phone</option>
-                                            <option value="laptop">Laptop</option>
-                                            <option value="mixergrinder">Mixer Grinder</option>
-                                            <option value="iron">Iron</option>
-                                            <option value="fan">Fan</option>
-                                            <option value="airconditioner">Air Conditioner</option>
-                                            <option value="lights">Lights</option>
-                                            <option value="heater">Heater</option>
+                                            <option value="WashingMachine">Washing Machine</option>
+                                            <option value="Refrigerator">Refrigerator</option>
+                                            <option value="Television">Television</option>
+                                            <option value="Miscellaneous">Mobile Phone Charging</option>
+                                            <option value="Miscellaneous">Laptop Charging</option>
+                                            <option value="MixerGrinder">Mixer Grinder</option>
+                                            <option value="Iron">Iron</option>
+                                            <option value="Fan">Fan</option>
+                                            <option value="AC">Air Conditioner</option>
+                                            <option value="Light">Lights</option>
+                                            <option value="Heater">Heater</option>
                                         </select>
                                     </div>
                                     <div className="input2">
