@@ -5,11 +5,27 @@ const { collection, getFirestore, getDoc, query, where, orderBy, addDoc, doc, se
 module.exports = async function UserLogic(uid, appliance, result){
 
     try{
+
+        var result = result;
+        console.log(result, ' new result');
+
         const dbRef = collection(db, "users");
         const snap = await getDoc(doc(db, 'users', `${uid}`));
 
         // check if user exists
         if(snap.exists()){
+
+            // get energy value from db using uid
+            //const snap = await getDoc(doc(db, 'users', `${uid}`));
+            const data = snap.data();
+
+            var members = data.members;
+
+            for (let i = 0; i < result.length; i++) {
+                result[i] = (result[i]/members);
+                console.log(result[i], ' loging');
+            }
+
             var engy = 0;
             for(let i=0; i<result.length; i++){
                 engy += result[i];
@@ -19,10 +35,6 @@ module.exports = async function UserLogic(uid, appliance, result){
 
             const day = new Date();
             const formattedDate = date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
-
-            // get energy value from db using uid
-            const snap = await getDoc(doc(db, 'users', `${uid}`));
-            const data = snap.data();
             
             const energy = data.energy
             if( (energy) != undefined){
