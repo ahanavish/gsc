@@ -6,18 +6,27 @@ import { useState } from "react";
 
 var dArray = [];
 var eArray = [];
-var usArray = [];
-var daArray = [];
-
 var data1 = [
+    ["Date", "Consumption of Electricity"]
+];
+
+var data2 = [
     ["Date", "Consumption of Electricity"]
 ];
 
 const options1 = {
     chart: {
-        title: "Users"
+        title: "Personal Consumption"
     },
-    height: 205,
+    height: 210,
+    legend: { position: 'none' }
+};
+
+const options2 = {
+    chart: {
+        title: "Statewise Consumption"
+    },
+    height: 220,
     legend: { position: 'none' }
 };
 
@@ -25,8 +34,7 @@ function Dashboard() {
     const { user } = UserAuth();
     const [dayArray, setdayArray] = useState(dArray);
     const [engyArray, setengyArray] = useState(eArray);
-    const [ustateArray, setustateArray] = useState(usArray);
-    const [dateArray, setdateArray] = useState(daArray);
+    const [graph2, setgraph2] = useState({});
 
     const [stateValue, setstateValue] = useState("");
     const [membersValue, setmembersValue] = useState("");
@@ -44,7 +52,7 @@ function Dashboard() {
                 // console.log(data);
                 setdayArray(data.data.day);
                 setengyArray(data.data.engy);
-                // setustateArray(data.data.data2.atav)
+                setgraph2(data.data.data2.atav);
             })
             .catch(error => console.error(error));
 
@@ -54,17 +62,33 @@ function Dashboard() {
             .then(response => response.json())
             .then(data => {
                 setstateValue(data.data.state);
+                // console.log(data.data.state);
                 setmembersValue(data.data.members);
             })
             .catch(error => console.error(error));
     }, []);
 
     data1 = [["Date", "Consumption of Electricity"]];
-    var len = dayArray.length;
-    for (var i = 0; i < len; i++) {
+    var len1 = dayArray.length;
+    var total_power_consumed = 0;
+    for (var i = 0; i < len1; i++) {
+        total_power_consumed += engyArray[i];
         var arr = [dayArray[i], engyArray[i]]
         data1.push(arr);
     }
+
+    var total_power_consumed2 = Math.floor(total_power_consumed * 100) / 100;
+    var user_average = total_power_consumed2 / len1;
+
+    // console.log(graph2);
+    // console.log(graph2.Dates);
+    // console.log(graph2[`${stateValue}`]);
+    // data2 = [["Date", "Consumption of Electricity"]];
+    // var len2 = graph2[`${stateValue}`].length;
+    // for (var j = 0; j < len2; j++) {
+    //     var a = [graph2.Dates[j], graph2[`${stateValue}`][j]]
+    //     data2.push(a);
+    // }
 
     return (
         <div className="dash">
@@ -83,9 +107,9 @@ function Dashboard() {
             </div>
             <div className="column1row2">
                 <div className="userInfo2">
-                    <h1>Total power consumed: </h1>
-                    <h1>Appliance consumed max power: Television</h1>
-                    <h1>Power consumed by __-------------__: </h1>
+                    <h1>Total power consumed: {total_power_consumed2} </h1>
+                    <h1>User Average: {user_average} </h1>
+                    <h1>Appliance consuming max power: </h1>
                     <h1>Appliance consumed for max duration: </h1>
                 </div>
             </div>
@@ -99,18 +123,16 @@ function Dashboard() {
                 />
             </div>
             <div className="column2row2">
-                <Chart
+                {/* <Chart
                     chartType="Line"
                     width="100%"
                     height="200px"
-                    data={data1}
-                    options={options1}
-                />
+                    data={data2}
+                    options={options2}
+                /> */}
             </div>
         </div>
     );
 }
 
 export default Dashboard;
-
-
