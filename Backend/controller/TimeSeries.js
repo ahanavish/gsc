@@ -10,6 +10,7 @@ module.exports = async function timeseries(uid) {
     var check;
 
     try {
+
         check = data.energy;
         if (check == undefined) {
             return false;
@@ -31,6 +32,7 @@ module.exports = async function timeseries(uid) {
         const day = energy.day;
         const engy = energy.engy;
         return { day, engy, data2 };
+
     }
 
 }
