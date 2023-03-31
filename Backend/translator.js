@@ -20,7 +20,7 @@ module.exports = async function Model(inputData){
         const inputDataString = JSON.stringify(inputData);
         console.log(inputDataString, "nodejs");
         // Run the Python script and specify the output file
-        const pythonProcess = spawn('python', ['model/main.py', inputDataString]);
+        const pythonProcess = spawn('python', ['model/new_main.py', inputDataString]);
 
         // Handle output from the script
         pythonProcess.stdout.on('data', (data) => {
