@@ -50,7 +50,7 @@ function YTCarousel(props) {
                     titleArray.push(`${v.snippet.title}`)
                 }
             })
-    })
+    }, [])
 
     return (
         <div className="carousel-wrapper">

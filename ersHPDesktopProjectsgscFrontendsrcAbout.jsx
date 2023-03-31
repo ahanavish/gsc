@@ -1,0 +1,43 @@
+[33m585a6ab[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: pull: Fast-forward
+[33mbaf2c17[m HEAD@{1}: reset: moving to HEAD
+[33mbaf2c17[m HEAD@{2}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m46c4549[m HEAD@{3}: reset: moving to HEAD
+[33m46c4549[m HEAD@{4}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m2f66883[m HEAD@{5}: reset: moving to HEAD
+[33m2f66883[m HEAD@{6}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m531725a[m HEAD@{7}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33mbd58abe[m HEAD@{8}: reset: moving to HEAD
+[33mbd58abe[m HEAD@{9}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33meb0485e[m HEAD@{10}: reset: moving to HEAD
+[33meb0485e[m HEAD@{11}: commit: Add About and Dashboard
+[33m64474a9[m HEAD@{12}: pull: Fast-forward
+[33m94b210d[m HEAD@{13}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m15163fd[m HEAD@{14}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m8139a52[m HEAD@{15}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m6c24b4c[m HEAD@{16}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33mae00248[m HEAD@{17}: commit: Fixed Form submission and Navbar
+[33m13c3927[m HEAD@{18}: commit: Maintain uniformity
+[33mc2271e1[m HEAD@{19}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m9a1ad41[m HEAD@{20}: reset: moving to 9a1ad4172406355f60669f4c990c16b7964348c6
+[33m4b38601[m HEAD@{21}: commit: Maintain uniformity
+[33m9a1ad41[m HEAD@{22}: commit: Add Blogs carousel
+[33m3d075a1[m HEAD@{23}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m75f67b2[m HEAD@{24}: commit: Move frontend files into a folder
+[33mb771005[m HEAD@{25}: commit: Add styles to YT cards
+[33m48c2be1[m HEAD@{26}: reset: moving to 48c2be14170da8efb05c3ac25fc0895de1b09cae
+[33mdb9530c[m HEAD@{27}: commit: Add styling to YT cards
+[33m48c2be1[m HEAD@{28}: commit: Add open YT video functionality to cards
+[33m2afd3fb[m HEAD@{29}: reset: moving to 2afd3fb4e1db25588852705b79c09f072245f901
+[33mc8839d7[m HEAD@{30}: commit: Add YT video redirecting to cards
+[33m2afd3fb[m HEAD@{31}: reset: moving to 2afd3fb4e1db25588852705b79c09f072245f901
+[33m983f766[m HEAD@{32}: commit: Add YT video redirecting to cards
+[33m2afd3fb[m HEAD@{33}: commit: Add Dynamic Form
+[33md74e679[m HEAD@{34}: commit: Add YT video carousel
+[33mb708150[m HEAD@{35}: reset: moving to b708150d2c61238ba7cf0ff5930e1238d458147b
+[33m780cd66[m HEAD@{36}: commit: Add YT Video Carousel
+[33mb708150[m HEAD@{37}: commit: Add Youtube integration
+[33m46fb276[m HEAD@{38}: commit: Add Firebase Google Authentication
+[33m3c20baf[m HEAD@{39}: commit: Add Navbar
+[33m6373b6e[m HEAD@{40}: commit: Add Google Authentication
+[33m68892f5[m HEAD@{41}: commit: Create React App
+[33me293b60[m HEAD@{42}: commit (initial): Initialize project using Create React App

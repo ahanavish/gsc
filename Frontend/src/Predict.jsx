@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { UserAuth } from './context/AuthContext';
+import { Chart } from "react-google-charts";
 
+var dArray = [];
+var eArray = [];
+var data3 = [
+    ["Date", "Consumption of Electricity"]
+];
+
+const options3 = {
+    chart: {
+        title: "Users"
+    },
+    height: 305,
+    legend: { position: 'none' }
+};
 function Predict() {
     const { user } = UserAuth();
+    const [dayArray, setdayArray] = useState(dArray);
+    const [energyArray, setenergyArray] = useState(eArray);
 
-    const func = async () => {
-        await fetch('http://localhost:8080/inference', {
+    useEffect(() => {
+        fetch('http://localhost:8080/inference', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -17,14 +33,35 @@ function Predict() {
             })
         })
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                // console.log(JSON.parse(data.data));
+                setdayArray(JSON.parse(data.data).date);
+                setenergyArray(JSON.parse(data.data).energy)
+
+            })
             .catch(error => console.error(error));
+    }, [])
+
+    data3 = [["Date", "Consumption of Electricity"]];
+    var len = dayArray.length;
+    for (var i = 0; i < len; i++) {
+        var arr = [dayArray[i], energyArray[i][0]]
+        data3.push(arr);
     }
 
     return (
         <div>
-            <Navbar></Navbar>
-            <button className="btn" onClick={func}>gbgb</button>
+            <Navbar item1="Dashboard" item2="Guide" item3="Analyze" item4="About"></Navbar>
+            <div className="result">You have used _________________</div>
+            <div className="predictBox">
+                <Chart
+                    chartType="Line"
+                    width="100%"
+                    height="200px"
+                    data={data3}
+                    options={options3}
+                />
+            </div>
         </div>
     );
 }
