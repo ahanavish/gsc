@@ -31,10 +31,10 @@ module.exports = async function UserLogic(uid, appliance, result, MaxDuration, M
                 engy += result[i];
             }
 
-            var date = new Date();
-
             const day = new Date();
-            const formattedDate = date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+            const formattedDate = day.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+
+            console.log(formattedDate);
 
             const energy = data.energy
             if ((energy) != undefined) {
@@ -44,12 +44,13 @@ module.exports = async function UserLogic(uid, appliance, result, MaxDuration, M
                 // pushes new value to array
                 console.log(engyArr);
                 engyArr.push(engy);
-                dayArr.push(day);
+                dayArr.push(formattedDate);
 
                 // list of arrays, day and engy
                 const engylis = { day: dayArr, engy: engyArr }
 
-                console.log(energy, 'energy');
+                console.log(engylis, 'energy');
+
 
                 await setDoc(doc(dbRef, `${uid}`), {
                     // make it so that it has a new id for each entry
@@ -63,7 +64,8 @@ module.exports = async function UserLogic(uid, appliance, result, MaxDuration, M
                 // set new values
                 const engylis = { day: [formattedDate], engy: [engy] }
 
-                console.log(energy, 'energy');
+                console.log(engylis, 'energy new');
+                console.log(MaxDuration, MaxPower, 'test');
 
                 await setDoc(doc(dbRef, `${uid}`), {
                     // make it so that it has a new id for each entry

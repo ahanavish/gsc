@@ -34,6 +34,8 @@ app.post('/calculate', Auth, async (req, res) => {
     const index = time.indexOf(maxVal);
     const MaxDuration = appliances[index];
 
+    console.log(MaxDuration, 'maxdur');
+
     // nesting user session variable
     var { uid, name, email, emailVerified } = user;
 
@@ -67,8 +69,11 @@ app.post('/calculate', Auth, async (req, res) => {
     console.log(result, 'result');
 
     const maxVal2 = Math.max(...result);
-    const index2 = time.indexOf(maxVal2);
+    console.log(maxVal2,'maxVal2');
+    const index2 = result.indexOf(maxVal2);
+    console.log(index2, 'index2');
     const MaxPower = appliances[index2];
+    console.log(MaxPower,'MaxPower');
 
     // if the state , members is not entered, then it returns false, frontend logic to redirect to initial 
     const status = await UserLogic(uid, appliances, result, MaxDuration, MaxPower);
