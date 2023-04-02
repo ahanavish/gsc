@@ -11,7 +11,7 @@ var data3 = [
 
 const options3 = {
     chart: {
-        title: "Users"
+        title: "Predicted Consumption"
     },
     height: 305,
     legend: { position: 'none' }
@@ -52,7 +52,6 @@ function Predict() {
     return (
         <div>
             <Navbar item1="Dashboard" item2="Guide" item3="Analyze" item4="About"></Navbar>
-            <div className="result">You have used _________________</div>
             <div className="predictBox">
                 <Chart
                     chartType="Line"

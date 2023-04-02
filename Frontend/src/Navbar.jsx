@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { UserAuth } from "./context/AuthContext";
+import logo from './Media/logo.jpeg'
 
 function Navbar(props) {
     const { logOut } = UserAuth()
@@ -17,7 +18,8 @@ function Navbar(props) {
         <div className="navbar">
             <Link to="/dashboard" style={{ textDecoration: 'none' }}>
                 <div className="brand-name">
-                    WattWise
+                    <div><img className="appLogo" src={logo} alt="Italian Trulli"></img></div>
+                    <div className="appName">WattWise</div>
                 </div>
             </Link>
             <div className="options">

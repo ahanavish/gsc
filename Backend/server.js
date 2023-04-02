@@ -16,10 +16,10 @@ const UpdateUserProfile = require('./controller/UpdateProfile.js');
 require('dotenv').config();
 const app = express();
 app.use(express.json(),
-        cors()
+    cors()
 );
 
-app.post('/calculate', Auth, async(req, res)=> {
+app.post('/calculate', Auth, async (req, res) => {
 
     // user form & user session data variables
     const appliances = req.body.appliances;
@@ -35,16 +35,16 @@ app.post('/calculate', Auth, async(req, res)=> {
     const MaxDuration = appliances[index];
 
     // nesting user session variable
-    var {uid, name, email, emailVerified} = user;
+    var { uid, name, email, emailVerified } = user;
 
     // wattage queried from the DB
     const def = await GetWattage();
 
     console.log(wattage, ' wattage');
 
-    for(let i=0; i<appliances.length; i++){
-        time[i] = time[i]*24*30;
-        if(wattage[i] == null){
+    for (let i = 0; i < appliances.length; i++) {
+        time[i] = time[i] * 24 * 30;
+        if (wattage[i] == null) {
             let ap = appliances[i]
 
             let value = def[ap];
@@ -53,16 +53,16 @@ app.post('/calculate', Auth, async(req, res)=> {
         }
     }
 
-    var result=[];
-    console.log('result ',result );
-    if( (time && appliances) && (time.length == appliances.length) ){
+    var result = [];
+    console.log('result ', result);
+    if ((time && appliances) && (time.length == appliances.length)) {
 
-        for(i=0;i<appliances.length;i++){
-            result[i] = wattage[i]*time[i]
+        for (i = 0; i < appliances.length; i++) {
+            result[i] = wattage[i] * time[i]
         }
 
-    }else{
-        res.send({error: 'Please provide time and power'});
+    } else {
+        res.send({ error: 'Please provide time and power' });
     }
     console.log(result, 'result');
 
@@ -73,76 +73,75 @@ app.post('/calculate', Auth, async(req, res)=> {
     // if the state , members is not entered, then it returns false, frontend logic to redirect to initial 
     const status = await UserLogic(uid, appliances, result, MaxDuration, MaxPower);
 
-    res.send({status: status});
+    res.send({ status: status });
 
 })
 
-app.post('/inference', Auth, async (req,res)=>{
+app.post('/inference', Auth, async (req, res) => {
 
     const result = await Values(req.body.user.uid);
     console.log(result, "nodejs");
     const data = await translator(result);
     console.log(data, 'data2 nodejs');
 
-    return res.json({data: data});
+    return res.json({ data: data });
 
 })
 
-app.post('/initial', Auth, async (req,res)=>{
+app.post('/initial', Auth, async (req, res) => {
 
     var members = req.body.members
     var state = req.body.state
-    var {uid, name, email, emailVerified} = req.body.user;
-    
+    var { uid, name, email, emailVerified } = req.body.user;
+
     // retrives bool value to check if user already exists in DB, if it does then returns true, where frontend logic is handled to redirect to dashboard
     // returns false if user doesnt exists
     var status = await Init(uid, name, email, state, members);
 
-    res.send({status: status});
+    res.send({ status: status });
 
 })
 
-app.get('/isexist', async(req,res)=>{
+app.get('/isexist', async (req, res) => {
 
     console.log(req.query.uid, 'uid');
     const status = await IsExist(req.query.uid); // req.params.uid is used in the url as a parameter
 
-    res.send({status: status});
+    res.send({ status: status });
 
 })
 
-app.get('/profile', async (req,res)=>{
-    
+app.get('/profile', async (req, res) => {
+
     const uid = req.query.uid;
     const profile = await GetProfile(uid);
-    res.send({data:profile});
+    res.send({ data: profile });
 
 });
 
-app.get('/timeseries', async (req,res)=>{
+app.get('/timeseries', async (req, res) => {
 
     const uid = req.query.uid;
     console.log(uid);
     const data = await GetTimeSeries(uid);
-    res.send({data:data});
+    res.send({ data: data });
 
 })
 
-// redundant
-app.patch('/updateprofile', Auth, async (req,res)=>{ // PUT is to update the whole document, PATCH is to update a part of the document
+app.patch('/updateprofile', Auth, async (req,res)=> { // PUT is to update the whole document, PATCH is to update a part of the document
     console.log(req.body);
     const { name } = req.body.name;
     const { state } = req.body.state;
     const { num_members } = req.body.num_members;
 
     const { uid } = req.body.user;
-    
+
     const result = await UpdateUserProfile(uid, name, state, num_members);
 
-    return res.json({status: result})
+    return res.json({ status: result })
 })
 
-app.listen(process.env.PORT || 8080, (err)=>{
+app.listen(process.env.PORT || 8080, (err) => {
     console.log(`Server is running on Port ${process.env.PORT}`);
 })
 

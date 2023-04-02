@@ -209,11 +209,19 @@ button:hover {
 }
 
 .brand-name {
+    display: flex;
+    margin-left: 35px;
+    margin-top: 10px;
     color: #ffffff;
     font-weight: 500;
     font-size: 30px;
-    margin-left: 35px;
-    margin-top: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.appName {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 30px;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -623,7 +631,7 @@ option:hover:before {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
-    margin-top: 200px;
+    margin-top: 150px;
     border: 1px solid black;
     height: 350px;
     width: 845px;
@@ -634,7 +642,7 @@ option:hover:before {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
-    margin-top: 120px;
+    margin-top: 80px;
     font-size: 30px;
     font-family: 'Montserrat', sans-serif;
 }
@@ -778,4 +786,9 @@ iframe {
     text-align: justify;
     line-height: 1.8;
     font-family: 'Montserrat', sans-serif;
+}
+
+.appLogo {
+    margin-right: 15px;
+    height: 40px;
 }

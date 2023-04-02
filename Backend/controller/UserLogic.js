@@ -1,10 +1,10 @@
 const db = require('../config.js')
 
-const { collection, getFirestore, getDoc, query, where, orderBy, addDoc, doc, setDoc} = require("firebase/firestore");
+const { collection, getFirestore, getDoc, query, where, orderBy, addDoc, doc, setDoc } = require("firebase/firestore");
 
-module.exports = async function UserLogic(uid, appliance, result){
+module.exports = async function UserLogic(uid, appliance, result, MaxDuration, MaxPower) {
 
-    try{
+    try {
 
         var result = result;
         console.log(result, ' new result');
@@ -13,7 +13,7 @@ module.exports = async function UserLogic(uid, appliance, result){
         const snap = await getDoc(doc(db, 'users', `${uid}`));
 
         // check if user exists
-        if(snap.exists()){
+        if (snap.exists()) {
 
             // get energy value from db using uid
             //const snap = await getDoc(doc(db, 'users', `${uid}`));
@@ -22,12 +22,12 @@ module.exports = async function UserLogic(uid, appliance, result){
             var members = data.members;
 
             for (let i = 0; i < result.length; i++) {
-                result[i] = (result[i]/members);
+                result[i] = (result[i] / members);
                 console.log(result[i], ' loging');
             }
 
             var engy = 0;
-            for(let i=0; i<result.length; i++){
+            for (let i = 0; i < result.length; i++) {
                 engy += result[i];
             }
 
@@ -35,39 +35,39 @@ module.exports = async function UserLogic(uid, appliance, result){
 
             const day = new Date();
             const formattedDate = date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
-            
+
             const energy = data.energy
-            if( (energy) != undefined){
+            if ((energy) != undefined) {
                 var dayArr = energy.day;
                 var engyArr = energy.engy;
 
                 // pushes new value to array
                 console.log(engyArr);
                 engyArr.push(engy);
-                dayArr.push(day); 
+                dayArr.push(day);
 
                 // list of arrays, day and engy
-                const engylis = {day:dayArr,engy:engyArr}
+                const engylis = { day: dayArr, engy: engyArr }
 
                 console.log(energy, 'energy');
 
                 await setDoc(doc(dbRef, `${uid}`), {
                     // make it so that it has a new id for each entry
-                    energy : engylis
+                    energy: engylis
 
                 }, {
                     merge: true
                 })
 
-            }else{
+            } else {
                 // set new values
-                const engylis = {day:[formattedDate],engy:[engy]}
+                const engylis = { day: [formattedDate], engy: [engy] }
 
                 console.log(energy, 'energy');
 
                 await setDoc(doc(dbRef, `${uid}`), {
                     // make it so that it has a new id for each entry
-                    energy : engylis,
+                    energy: engylis,
                     MaxDuration: MaxDuration,
                     MaxPower: MaxPower
 
@@ -75,7 +75,7 @@ module.exports = async function UserLogic(uid, appliance, result){
                     merge: true
                 })
             }
-        }else{
+        } else {
 
             /*var engy = {}
             appliance.forEach((appl)=> {
@@ -93,9 +93,9 @@ module.exports = async function UserLogic(uid, appliance, result){
         }
         return true;
 
-    }catch(e){
+    } catch (e) {
         console.log(e);
         return false;
     }
-    
+
 }
