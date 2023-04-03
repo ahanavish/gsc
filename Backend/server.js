@@ -1,6 +1,5 @@
 const cors = require('cors');
 const express = require('express');
-const { collection, getFirestore, getDocs, where, orderBy, addDoc, query, doc, setDoc, getDoc, updateDoc, documentId } = require("firebase/firestore");
 
 const Auth = require('./middleware/Auth.js');
 const translator = require('./translator.js');
@@ -12,10 +11,12 @@ const UserLogic = require('./controller/UserLogic.js');
 const GetProfile = require('./controller/Dashboard.js');
 const GetTimeSeries = require('./controller/TimeSeries.js');
 const UpdateUserProfile = require('./controller/UpdateProfile.js');
+const { stat } = require('fs');
 
 require('dotenv').config();
 const app = express();
-app.use(express.json(),
+app.use(
+    express.json(),
     cors()
 );
 
@@ -78,7 +79,9 @@ app.post('/calculate', Auth, async (req, res) => {
     // if the state , members is not entered, then it returns false, frontend logic to redirect to initial 
     const status = await UserLogic(uid, appliances, result, MaxDuration, MaxPower);
 
-    res.send({ status: status });
+    return res.json({status: status})
+
+    //res.send({ status: status });
 
 })
 
@@ -103,7 +106,8 @@ app.post('/initial', Auth, async (req, res) => {
     // returns false if user doesnt exists
     var status = await Init(uid, name, email, state, members);
 
-    res.send({ status: status });
+    return res.json({status: status})
+    //res.send({ status: status });
 
 })
 
@@ -112,7 +116,8 @@ app.get('/isexist', async (req, res) => {
     console.log(req.query.uid, 'uid');
     const status = await IsExist(req.query.uid); // req.params.uid is used in the url as a parameter
 
-    res.send({ status: status });
+    return res.json({status: status });
+    //res.send({ status: status });
 
 })
 
@@ -120,7 +125,9 @@ app.get('/profile', async (req, res) => {
 
     const uid = req.query.uid;
     const profile = await GetProfile(uid);
-    res.send({ data: profile });
+
+    return res.json({data: profile})
+    //res.send({ data: profile });
 
 });
 
@@ -129,7 +136,10 @@ app.get('/timeseries', async (req, res) => {
     const uid = req.query.uid;
     console.log(uid);
     const data = await GetTimeSeries(uid);
-    res.send({ data: data });
+
+    return res.json({data:data})
+
+    //res.send({ data: data });
 
 })
 
