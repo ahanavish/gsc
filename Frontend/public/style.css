@@ -27,16 +27,16 @@
 }
 
 .content h1 {
-    font-size: 90px;
+    font-size: 80px;
     color: #fff;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     letter-spacing: 2px;
 }
 
 .content button {
-    font-size: 20px;
+    font-size: 18px;
     color: #fff;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
@@ -791,4 +791,8 @@ iframe {
 .appLogo {
     margin-right: 15px;
     height: 40px;
+}
+
+.applogo {
+    height: 80px;
 }

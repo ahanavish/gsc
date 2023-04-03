@@ -85,8 +85,8 @@ function Analyze() {
                                             <option value="WashingMachine">Washing Machine</option>
                                             <option value="Refrigerator">Refrigerator</option>
                                             <option value="Television">Television</option>
-                                            <option value="Miscellaneous">Mobile Phone Charging</option>
-                                            <option value="Miscellaneous">Laptop Charging</option>
+                                            <option value="MobilePhoneCharging">Mobile Phone Charging</option>
+                                            <option value="LaptopCharging">Laptop Charging</option>
                                             <option value="MixerGrinder">Mixer Grinder</option>
                                             <option value="Iron">Iron</option>
                                             <option value="Fan">Fan</option>

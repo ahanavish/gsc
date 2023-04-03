@@ -33,8 +33,7 @@ module.exports = async function UserLogic(uid, appliance, result, MaxDuration, M
             }
             console.log(engy, 'engy');
 
-            const day = new Date();
-            const formattedDate = day.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+            const formattedDate = new Date().toISOString().slice(0, 10);
 
             console.log(formattedDate);
 
