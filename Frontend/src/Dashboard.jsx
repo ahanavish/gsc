@@ -51,7 +51,8 @@ function Dashboard() {
         })
             .then(response => response.json())
             .then(data => {
-                // console.log(data);
+                console.log("gfgggcg");
+                console.log(data.data);
                 setdayArray(data.data.day);
                 setengyArray(data.data.engy);
                 setgraph2(data.data.data2.atav);
@@ -72,6 +73,8 @@ function Dashboard() {
             .catch(error => console.error(error));
     }, []);
 
+    console.log(maxPower);
+    console.log(maxDuration);
     data1 = [["Date", "Consumption of Electricity"]];
     var len1 = dayArray.length;
     var total_power_consumed = 0;
@@ -87,12 +90,12 @@ function Dashboard() {
     console.log(graph2);
     console.log(graph2.Dates);
     console.log(graph2[`${stateValue}`]);
-    // data2 = [["Date", "Consumption of Electricity"]];
-    // var len2 = graph2[`${stateValue}`].length;
-    // for (var j = 0; j < len2; j++) {
-    //     var a = [graph2.Dates[j], graph2[`${stateValue}`][j]]
-    //     data2.push(a);
-    // }
+    data2 = [["Date", "Consumption of Electricity"]];
+    var len2 = graph2[`${stateValue}`].length;
+    for (var j = 0; j < len2; j++) {
+        var a = [graph2.Dates[j], graph2[`${stateValue}`][j]]
+        data2.push(a);
+    }
 
     return (
         <div className="dash">
@@ -111,10 +114,10 @@ function Dashboard() {
             </div>
             <div className="column1row2">
                 <div className="userInfo2">
-                    {/* <h1>Total power consumed: {total_power_consumed2} </h1>
+                    <h1>Total power consumed: {total_power_consumed2} </h1>
                     <h1>User Average: {user_average} </h1>
                     <h1>Appliance consuming max power: {maxPower} </h1>
-                    <h1>Appliance consumed for max duration: {maxDuration} </h1> */}
+                    <h1>Appliance consumed for max duration: {maxDuration} </h1>
                 </div>
             </div>
             <div className="column2row1">

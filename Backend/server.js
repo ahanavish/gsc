@@ -30,8 +30,18 @@ app.post('/calculate', Auth, async (req, res) => {
     const members = req.body.members;
     console.log(req.body);
 
-    const maxVal = Math.max(...time);
-    const index = time.indexOf(maxVal);
+    // console.log(...time);
+    var maxVal = 0;
+    var index = -1;
+    for (var i = 0; i < time.length; i++) {
+        if (time[i] > maxVal) {
+            maxVal = time[i];
+            index = i;
+        }
+    }
+    //const maxVal = Math.max(...time);
+    // console.log(maxVal);
+    // console.log(index);
     const MaxDuration = appliances[index];
 
     console.log(MaxDuration, 'maxdur');
@@ -42,11 +52,11 @@ app.post('/calculate', Auth, async (req, res) => {
     // wattage queried from the DB
     const def = await GetWattage();
 
-    console.log(wattage, ' wattage');
+    // console.log(wattage, ' wattage');
 
     for (let i = 0; i < appliances.length; i++) {
         time[i] = time[i] * 24 * 30;
-        if (wattage[i] == null) {
+        if (wattage[i] == "") {
             let ap = appliances[i]
 
             let value = def[ap];
@@ -56,7 +66,7 @@ app.post('/calculate', Auth, async (req, res) => {
     }
 
     var result = [];
-    console.log('result ', result);
+    // console.log('result ', result);
     if ((time && appliances) && (time.length == appliances.length)) {
 
         for (i = 0; i < appliances.length; i++) {
@@ -66,14 +76,14 @@ app.post('/calculate', Auth, async (req, res) => {
     } else {
         res.send({ error: 'Please provide time and power' });
     }
-    console.log(result, 'result');
+    // console.log(result, 'result');
 
     const maxVal2 = Math.max(...result);
-    console.log(maxVal2,'maxVal2');
+    // console.log(maxVal2, 'maxVal2');
     const index2 = result.indexOf(maxVal2);
-    console.log(index2, 'index2');
+    // console.log(index2, 'index2');
     const MaxPower = appliances[index2];
-    console.log(MaxPower,'MaxPower');
+    console.log(MaxPower, 'MaxPower');
 
     // if the state , members is not entered, then it returns false, frontend logic to redirect to initial 
     const status = await UserLogic(uid, appliances, result, MaxDuration, MaxPower);
@@ -127,14 +137,14 @@ app.get('/profile', async (req, res) => {
 app.get('/timeseries', async (req, res) => {
 
     const uid = req.query.uid;
-    console.log(uid);
+    // console.log(uid);
     const data = await GetTimeSeries(uid);
     res.send({ data: data });
 
 })
 
-app.patch('/updateprofile', Auth, async (req,res)=> { // PUT is to update the whole document, PATCH is to update a part of the document
-    console.log(req.body);
+app.patch('/updateprofile', Auth, async (req, res) => { // PUT is to update the whole document, PATCH is to update a part of the document
+    // console.log(req.body);
     const { name } = req.body.name;
     const { state } = req.body.state;
     const { num_members } = req.body.num_members;

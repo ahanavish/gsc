@@ -25,8 +25,8 @@ module.exports = async function timeseries(uid) {
     const snap2 = await getDoc(docref);
     const data2 = snap2.data();
 
-    console.log(data2.atav);
-    console.log(data.energy);
+    // console.log(data2.atav);
+    // console.log(data.energy);
     console.log(data.MaxDuration);
     console.log(data.MaxPower);
 
@@ -34,8 +34,10 @@ module.exports = async function timeseries(uid) {
 
         const MaxD = data.MaxDuration
         const MaxP = data.MaxPower
+        console.log("rerer");
+        console.log(MaxD);
+        console.log(MaxP)
         const state = data.state;
-        console.log(state, ' state');
         const energy = data.energy;
         const day = energy.day;
         const engy = energy.engy;
