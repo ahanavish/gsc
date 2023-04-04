@@ -1,5 +1,7 @@
 const cors = require('cors');
 const express = require('express');
+const request = require('request-promise');
+const bodyParser = require('body-parser');
 
 const Auth = require('./middleware/Auth.js');
 const translator = require('./translator.js');
@@ -71,7 +73,7 @@ app.post('/calculate', Auth, async (req, res) => {
     if ((time && appliances) && (time.length == appliances.length)) {
 
         for (i = 0; i < appliances.length; i++) {
-            result[i] = (wattage[i] * time[i])
+            result[i] = wattage[i] * time[i]
         }
 
     } else {
@@ -95,7 +97,7 @@ app.post('/calculate', Auth, async (req, res) => {
 
 })
 
-app.post('/inference', Auth, async (req, res) => {
+/*app.post('/inference', Auth, async (req, res) => {
 
     const result = await Values(req.body.user.uid);
     console.log(result, "nodejs");
@@ -104,7 +106,7 @@ app.post('/inference', Auth, async (req, res) => {
 
     return res.json({ data: data });
 
-})
+})*/
 
 app.post('/initial', Auth, async (req, res) => {
 
@@ -125,7 +127,7 @@ app.get('/isexist', async (req, res) => {
 
     console.log(req.query.uid, 'uid');
     const status = await IsExist(req.query.uid); // req.params.uid is used in the url as a parameter
-
+    console.log(status, 'status');
     return res.json({status: status });
     //res.send({ status: status });
 
@@ -153,6 +155,20 @@ app.get('/timeseries', async (req, res) => {
 
 })
 
+app.post('/inference', Auth, async (req, res) => {
+    try {
+        const result = await Values(req.body.user.uid);
+        const flaskUrl = 'http://localhost:5000/';
+
+        const data = await request.post(flaskUrl,  {json: result });
+        return res.json({ data: data });
+
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+      }
+  });
+
 app.patch('/updateprofile', Auth, async (req, res) => { // PUT is to update the whole document, PATCH is to update a part of the document
     // console.log(req.body);
     const { name } = req.body.name;
@@ -169,4 +185,3 @@ app.patch('/updateprofile', Auth, async (req, res) => { // PUT is to update the 
 app.listen(process.env.PORT || 8080, (err) => {
     console.log(`Server is running on Port ${process.env.PORT}`);
 })
-

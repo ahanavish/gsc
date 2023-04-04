@@ -1,32 +1,27 @@
 """Preprocessing the input data using model 2"""
-import datetime
-import json
 import sys
-
-import numpy as np
-import pandas as pd
+import json
+import datetime
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import numpy as np
+import pandas as pd
 from new_model import AirModel
 
+
 # Loading data using API
-input_data_string = sys.argv[1]
-
+"""input_data_string = sys.argv[1]
+"""
 # Parse the JSON data into a Python object
-input_data = json.loads(input_data_string)
-val = input_data.get('energy')
-
-if val is None:
-    with open('./output.json', 'w') as f:
-        json.dump(input_data, f)
-
-else:
-    print(input_data)
+#input_data = json.loads(input_data_string)
+# print(input_data)
+def func(input_data):
     energy_arr = input_data['energy']['engy']
     day_arr = input_data['energy']['day']
     state = input_data['state']
     member_no = input_data['members']
+
 
     print(energy_arr)
     print(day_arr)
@@ -88,7 +83,7 @@ else:
 
     # model
     model = AirModel()
-    model.load_state_dict(torch.load("./model/model_new.pt"))
+    model.load_state_dict(torch.load("model_new.pt"))
     optimizer = optim.Adam(model.parameters())
     loss_fn = nn.MSELoss()
 
@@ -139,19 +134,21 @@ else:
     # print(train_plot)
 
     input_data = {"date": new_date, 'energy': train_plot.tolist()}
+    print(input_data, 'input_data')
+    return input_data
 
-    '''
-    # plotting
-    # plt.plot(timeseries)
-    # plt.plot(train_plot, c='r')
-    plt.plot(test_plot, c='g')
-    plt.show()
+'''
+# plotting
+# plt.plot(timeseries)
+# plt.plot(train_plot, c='r')
+plt.plot(test_plot, c='g')
+plt.show()
 
-    '''
+'''
 
-    # dumping output to a new json file.
-    with open('./output.json', 'w') as f:
-        json.dump(input_data, f)
+# dumping output to a new json file.
+"""with open('./output.json', 'w') as f:
+    json.dump(input_data, f)"""
 
 
-    print('done1')
+print('done1')
