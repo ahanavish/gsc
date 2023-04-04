@@ -6,6 +6,7 @@ module.exports = async function SetInit(uid, name=null, email=null, state, membe
 
     const dbRef = collection(db, "users");
         const snap = await getDoc(doc(db, 'users', `${uid}`));
+        
         if(snap.exists()){
 
             return false
