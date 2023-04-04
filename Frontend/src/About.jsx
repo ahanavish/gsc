@@ -8,7 +8,7 @@ function About() {
         <div>
             <Navbar item1="Dashboard" item2="Guide" item3="Analyze" item4="Predict" />
             <div className="head1">
-                What is Electrifix?
+                What is WattWise?
             </div>
             <div className="aboutBox">
                 <div className="para1">
