@@ -15,32 +15,23 @@ module.exports = async function UserLogic(uid, appliance, result, MaxDuration, M
         // check if user exists
         if (snap.exists()) {
 
+            // get energy value from db using uid
+            //const snap = await getDoc(doc(db, 'users', `${uid}`));
             const data = snap.data();
 
             var members = data.members;
 
-<<<<<<< HEAD
             // for (let i = 0; i < result.length; i++) {
             //     result[i] = (result[i] / members);
             //     console.log(result[i], ' loging');
             // }
-=======
-            console.log(('before'), result, members);
-            for (let i = 0; i < result.length; i++) {
-                result[i] = (result[i] / members);
-                console.log(result[i], ' loging');
-            }
-            console.log(('after'), result);
-
->>>>>>> 49e6d56402bff25e07349b5907675e2aceaff7f8
 
             var engy = 0;
             for (let i = 0; i < result.length; i++) {
                 engy += result[i];
             }
-            console.log(engy, 'engy');
 
-            engy = engy / (1000)
+            engy = engy / (1000) //kw hour
 
             const formattedDate = new Date().toISOString().slice(0, 10);
 
@@ -89,6 +80,18 @@ module.exports = async function UserLogic(uid, appliance, result, MaxDuration, M
             }
         } else {
 
+            /*var engy = {}
+            appliance.forEach((appl)=> {
+                engy[appl] = result[(appliance.indexOf(appl))]
+            });
+
+            await setDoc(doc(dbRef, `${uid}`), {
+                name: name,
+                email: email,
+                state: state,
+                energy: engy,
+                members: members
+            })*/
             return false
         }
         return true;

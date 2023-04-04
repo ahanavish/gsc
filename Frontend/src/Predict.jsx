@@ -11,7 +11,7 @@ var data3 = [
 
 const options3 = {
     chart: {
-        title: "Predicted Consumption"
+        title: "Predicted Consumption (in kWh)"
     },
     height: 305,
     legend: { position: 'none' }
@@ -22,6 +22,7 @@ function Predict() {
     const [energyArray, setenergyArray] = useState(eArray);
 
     useEffect(() => {
+
         fetch('http://localhost:8080/inference', {
             method: 'POST',
             headers: {
@@ -42,12 +43,17 @@ function Predict() {
             .catch(error => console.error(error));
     }, [])
 
-    data3 = [["Date", "Consumption of Electricity"]];
-    var len = dayArray.length;
-    for (var i = 0; i < len; i++) {
-        var arr = [dayArray[i], energyArray[i][0]]
-        data3.push(arr);
+    data3 = [["Date", "Consumption of Electricity"], [0, 0]];
+
+    if (dayArray.length !== 0) {
+        var len = dayArray.length;
+        data3.pop()
+        for (var i = 0; i < len; i++) {
+            var arr = [dayArray[i], energyArray[i][0]]
+            data3.push(arr);
+        }
     }
+    //kw hour (10-30)
 
     return (
         <div>

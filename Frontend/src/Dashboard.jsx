@@ -18,7 +18,7 @@ const options1 = {
     colors: ["#8e0152", "#276419"],
     pointSize: 70,
     chart: {
-        title: "Personal Consumption"
+        title: "Personal Consumption (in kWh)"
     },
     height: 210,
     legend: { position: 'none' },
@@ -26,7 +26,7 @@ const options1 = {
 
 const options2 = {
     chart: {
-        title: "Statewise Consumption"
+        title: "Statewise Consumption (in MWh)"
     },
     height: 220,
     legend: { position: 'none' }
@@ -79,33 +79,36 @@ function Dashboard() {
     console.log(maxDuration);
     data1 = [["Date", "Consumption of Electricity"], [0, 0]];
     var len1, total_power_consumed, total_power_consumed2, user_average;
-    if (dayArray != null) {
-        len1 = dayArray.length;
-        total_power_consumed = 0;
-        data1.pop();
-        for (var i = 0; i < len1; i++) {
-            total_power_consumed += engyArray[i];
-            var arr = [dayArray[i], engyArray[i]]
-            data1.push(arr);
-        }
+    console.log(dayArray, 'grgrt')
+    // if (dayArray.length !== 0) {
+    //     len1 = dayArray.length;
+    //     total_power_consumed = 0;
+    //     data1.pop();
+    //     for (var i = 0; i < len1; i++) {
+    //         total_power_consumed += engyArray[i];
+    //         var arr = [dayArray[i], engyArray[i]]
+    //         data1.push(arr);
+    //     }
+    //     //kw hour (not per person) - 10 to 30
 
-        total_power_consumed2 = Math.floor(total_power_consumed * 100) / 100;
-        user_average = total_power_consumed2 / len1;
-    }
+    //     total_power_consumed2 = Math.floor(total_power_consumed * 100) / 100;
+    //     user_average = total_power_consumed2 / len1;
+    // }
 
     console.log(graph2);
     console.log(graph2.Dates);
     var states = graph2[stateValue]
-    console.log(states, 'statevalue');
+    console.log(states, 'statevalue'); //MWatt - population
     data2 = [["Date", "Consumption of Electricity"], [0, 0]];
     var len2;
-    if (states != null) {
-        len2 = states.length
-        for (var j = 0; j < len2; j++) {
-            var a = [graph2.Dates[j], states[j]]
-            data2.push(a);
-        }
-    }
+    // if (states !== undefined) {
+    //     len2 = states.length
+    //     data2.pop();
+    //     for (var j = 0; j < len2; j++) {
+    //         var a = [graph2.Dates[j], states[j]]
+    //         data2.push(a);
+    //     }
+    // }
 
     return (
         <div className="dash">
