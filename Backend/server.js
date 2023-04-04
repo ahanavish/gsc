@@ -1,7 +1,6 @@
 const cors = require('cors');
 const express = require('express');
-const request = require('request-promise');
-const bodyParser = require('body-parser');
+const { collection, getFirestore, getDocs, where, orderBy, addDoc, query, doc, setDoc, getDoc, updateDoc, documentId } = require("firebase/firestore");
 
 const Auth = require('./middleware/Auth.js');
 const translator = require('./translator.js');
@@ -13,12 +12,10 @@ const UserLogic = require('./controller/UserLogic.js');
 const GetProfile = require('./controller/Dashboard.js');
 const GetTimeSeries = require('./controller/TimeSeries.js');
 const UpdateUserProfile = require('./controller/UpdateProfile.js');
-const { stat } = require('fs');
 
 require('dotenv').config();
 const app = express();
-app.use(
-    express.json(),
+app.use(express.json(),
     cors()
 );
 
@@ -58,7 +55,7 @@ app.post('/calculate', Auth, async (req, res) => {
     // console.log(wattage, ' wattage');
 
     for (let i = 0; i < appliances.length; i++) {
-        time[i] = time[i] * 24 * 30;
+        time[i] = time[i];
         if (wattage[i] == "") {
             let ap = appliances[i]
 
@@ -73,7 +70,7 @@ app.post('/calculate', Auth, async (req, res) => {
     if ((time && appliances) && (time.length == appliances.length)) {
 
         for (i = 0; i < appliances.length; i++) {
-            result[i] = wattage[i] * time[i]
+            result[i] = (wattage[i] * time[i]) //Watt hour
         }
 
     } else {
@@ -91,13 +88,11 @@ app.post('/calculate', Auth, async (req, res) => {
     // if the state , members is not entered, then it returns false, frontend logic to redirect to initial 
     const status = await UserLogic(uid, appliances, result, MaxDuration, MaxPower);
 
-    return res.json({status: status})
-
-    //res.send({ status: status });
+    res.send({ status: status });
 
 })
 
-/*app.post('/inference', Auth, async (req, res) => {
+app.post('/inference', Auth, async (req, res) => {
 
     const result = await Values(req.body.user.uid);
     console.log(result, "nodejs");
@@ -106,7 +101,7 @@ app.post('/calculate', Auth, async (req, res) => {
 
     return res.json({ data: data });
 
-})*/
+})
 
 app.post('/initial', Auth, async (req, res) => {
 
@@ -118,8 +113,7 @@ app.post('/initial', Auth, async (req, res) => {
     // returns false if user doesnt exists
     var status = await Init(uid, name, email, state, members);
 
-    return res.json({status: status})
-    //res.send({ status: status });
+    res.send({ status: status });
 
 })
 
@@ -127,9 +121,8 @@ app.get('/isexist', async (req, res) => {
 
     console.log(req.query.uid, 'uid');
     const status = await IsExist(req.query.uid); // req.params.uid is used in the url as a parameter
-    console.log(status, 'status');
-    return res.json({status: status });
-    //res.send({ status: status });
+
+    res.send({ status: status });
 
 })
 
@@ -137,9 +130,7 @@ app.get('/profile', async (req, res) => {
 
     const uid = req.query.uid;
     const profile = await GetProfile(uid);
-
-    return res.json({data: profile})
-    //res.send({ data: profile });
+    res.send({ data: profile });
 
 });
 
@@ -148,26 +139,9 @@ app.get('/timeseries', async (req, res) => {
     const uid = req.query.uid;
     // console.log(uid);
     const data = await GetTimeSeries(uid);
-
-    return res.json({data:data})
-
-    //res.send({ data: data });
+    res.send({ data: data });
 
 })
-
-app.post('/inference', Auth, async (req, res) => {
-    try {
-        const result = await Values(req.body.user.uid);
-        const flaskUrl = 'http://localhost:5000/';
-
-        const data = await request.post(flaskUrl,  {json: result });
-        return res.json({ data: data });
-
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
-      }
-  });
 
 app.patch('/updateprofile', Auth, async (req, res) => { // PUT is to update the whole document, PATCH is to update a part of the document
     // console.log(req.body);
@@ -185,3 +159,4 @@ app.patch('/updateprofile', Auth, async (req, res) => { // PUT is to update the 
 app.listen(process.env.PORT || 8080, (err) => {
     console.log(`Server is running on Port ${process.env.PORT}`);
 })
+
