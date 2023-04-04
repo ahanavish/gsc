@@ -21,15 +21,17 @@ module.exports = async function UserLogic(uid, appliance, result, MaxDuration, M
 
             var members = data.members;
 
-            for (let i = 0; i < result.length; i++) {
-                result[i] = (result[i] / members);
-                console.log(result[i], ' loging');
-            }
+            // for (let i = 0; i < result.length; i++) {
+            //     result[i] = (result[i] / members);
+            //     console.log(result[i], ' loging');
+            // }
 
             var engy = 0;
             for (let i = 0; i < result.length; i++) {
                 engy += result[i];
             }
+
+            engy = engy / (1000)
 
             const formattedDate = new Date().toISOString().slice(0, 10);
 

@@ -18,33 +18,27 @@ function SignIn2() {
             return false;
         }
 
-        if (user != null) {
-            var exists = null;
-            fetch('http://localhost:8080/initial', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "state": x,
-                    "members": y,
-                    "user": { "uid": user.uid, "name": user.displayName, "email": user.email },
-                    "emailVerified": user.emailVerified
-                })
+        var exists = null;
+        fetch('http://localhost:8080/initial', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "state": x,
+                "members": y,
+                "user": { "uid": user.uid, "name": user.displayName, "email": user.email },
+                "emailVerified": user.emailVerified
             })
-                .then(response => response.json())
-                .then(data => {
-                    exists = data;
-                })
-                .catch(error => console.error(error));
-        }
+        })
+            .then(response => response.json())
+            .then(data => {
+                exists = data;
+            })
+            .catch(error => console.error(error));
 
         navigate('/dashboard');
     }
-
-    useEffect(() => {
-
-    }, [user]);
 
     return (
         <div className="form">

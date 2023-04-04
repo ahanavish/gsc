@@ -6,31 +6,31 @@ import { useNavigate } from 'react-router-dom';
 const SignIn = () => {
     const { googleSignIn, user } = UserAuth();
     const [successValue, setsuccessValue] = useState(false);
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleGoogleSignIn = async () => {
         try {
-            // console.log(user);
+            console.log(user, 'user');
             await googleSignIn();
         } catch (error) {
             console.log(error);
         }
     };
 
-
     useEffect(() => {
         if (user != null) {
+            console.log(user.uid);
             fetch(('http://localhost:8080/isexist?uid=' + user.uid), {
                 method: 'GET'
             })
                 .then(response => response.json())
                 .then(data => {
-                    // console.log(data.status)
+                    console.log(data.status, 'status')
                     setsuccessValue(data.status)
                 })
                 .catch(error => console.error(error));
         }
-    }, [user]);
+    }, []);
 
     // console.log(successValue);
     if (successValue)

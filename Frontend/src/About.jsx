@@ -44,12 +44,13 @@ function About() {
                     <br></br>5. The app presents the user with the predicted consumption values, allowing them to better plan their energy usage and potentially reduce their energy bills.
                     <br></br>6. Over time, as the user continues to provide consumption data, the app's predictions become more accurate and tailored to the user's specific consumption patterns.
                 </div>
-                <div className="para6">This project is developed for Google Solution Challenge 2023.
-                    <br></br><br></br>We are targetting the following United Nations Sustainable Development Goals:
+                <div className="para6">This project is developed for GSC'23.
+                    <br></br>We are targetting the following United Nations Sustainable Development Goals:
                     <br></br>11: Sustainable Cities and Communities
                     <br></br>12: Responsible Consumption and Production
                 </div>
                 <div className="media3">
+                    <img src="https://th.bing.com/th/id/OIP.T8g3juudAJJIsBnjUGlFtQHaHa?w=163&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"></img>
                     <img className="img1" src="https://th.bing.com/th/id/OIP.gU9I_JPszuzqTml2Q__-1AHaHa?w=166&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"></img>
                     <img src="https://th.bing.com/th/id/OIP.0KArEb-xfmghCTRBlhJvmgAAAA?w=165&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"></img>
                 </div>

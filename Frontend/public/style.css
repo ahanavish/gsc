@@ -759,16 +759,16 @@ iframe {
     padding: 30px;
     position: absolute;
     top: 1630px;
-    left: 560px;
-    height: 250px;
+    left: 475px;
+    height: 180px;
     width: 145px;
     display: flex;
 }
 
 .media3 img {
     margin: 20px;
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
 }
 
 .img1 {
@@ -779,11 +779,11 @@ iframe {
     position: absolute;
     margin-top: 1680px;
     left: 26px;
-    height: 250px;
-    width: 525px;
+    height: 180px;
+    width: 415px;
     /* border: 1px solid black; */
     font-size: 17px;
-    text-align: justify;
+    text-align: left;
     line-height: 1.8;
     font-family: 'Montserrat', sans-serif;
 }

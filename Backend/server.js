@@ -70,7 +70,7 @@ app.post('/calculate', Auth, async (req, res) => {
     if ((time && appliances) && (time.length == appliances.length)) {
 
         for (i = 0; i < appliances.length; i++) {
-            result[i] = wattage[i] * time[i]
+            result[i] = (wattage[i] * time[i])
         }
 
     } else {
