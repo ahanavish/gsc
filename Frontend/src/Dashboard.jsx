@@ -53,13 +53,13 @@ function Dashboard() {
         })
             .then(response => response.json())
             .then(data => {
-                console.log("gfgggcg");
-                console.log(data.data);
-                setdayArray(data.data.day);
-                setengyArray(data.data.engy);
-                setgraph2(data.data.data2.atav);
-                setmaxPower(data.data.MaxP);
-                setmaxDuration(data.data.MaxD);
+                if (data.data) {
+                    setdayArray(data.data.day);
+                    setengyArray(data.data.engy);
+                    setgraph2(data.data.data2.atav);
+                    setmaxPower(data.data.MaxP);
+                    setmaxDuration(data.data.MaxD);
+                }
             })
             .catch(error => console.error(error));
 
@@ -78,22 +78,23 @@ function Dashboard() {
     console.log(maxPower);
     console.log(maxDuration);
     data1 = [["Date", "Consumption of Electricity"], [0, 0]];
-    var len1, total_power_consumed, total_power_consumed2, user_average;
+    var len1, total_power_consumed, total_power_consumed2, user_average, user_average2;
     console.log(dayArray, 'grgrt')
-    // if (dayArray.length !== 0) {
-    //     len1 = dayArray.length;
-    //     total_power_consumed = 0;
-    //     data1.pop();
-    //     for (var i = 0; i < len1; i++) {
-    //         total_power_consumed += engyArray[i];
-    //         var arr = [dayArray[i], engyArray[i]]
-    //         data1.push(arr);
-    //     }
-    //     //kw hour (not per person) - 10 to 30
+    if (dayArray.length !== 0) {
+        len1 = dayArray.length;
+        total_power_consumed = 0;
+        data1.pop();
+        for (var i = 0; i < len1; i++) {
+            total_power_consumed += engyArray[i];
+            var arr = [dayArray[i], engyArray[i]]
+            data1.push(arr);
+        }
+        //kw hour (not per person) - 10 to 30
 
-    //     total_power_consumed2 = Math.floor(total_power_consumed * 100) / 100;
-    //     user_average = total_power_consumed2 / len1;
-    // }
+        total_power_consumed2 = Math.floor(total_power_consumed * 100) / 100;
+        user_average = total_power_consumed2 / len1;
+        user_average2 = Math.floor(user_average * 100) / 100;
+    }
 
     console.log(graph2);
     console.log(graph2.Dates);
@@ -101,14 +102,14 @@ function Dashboard() {
     console.log(states, 'statevalue'); //MWatt - population
     data2 = [["Date", "Consumption of Electricity"], [0, 0]];
     var len2;
-    // if (states !== undefined) {
-    //     len2 = states.length
-    //     data2.pop();
-    //     for (var j = 0; j < len2; j++) {
-    //         var a = [graph2.Dates[j], states[j]]
-    //         data2.push(a);
-    //     }
-    // }
+    if (states !== undefined) {
+        len2 = states.length
+        data2.pop();
+        for (var j = 0; j < len2; j++) {
+            var a = [graph2.Dates[j], states[j]]
+            data2.push(a);
+        }
+    }
 
     return (
         <div className="dash">
@@ -128,7 +129,7 @@ function Dashboard() {
             <div className="column1row2">
                 <div className="userInfo2">
                     <h1>Total power consumed: {total_power_consumed2} </h1>
-                    <h1>User Average: {user_average} </h1>
+                    <h1>User Average: {user_average2} </h1>
                     <h1>Appliance consuming max power: {maxPower} </h1>
                     <h1>Appliance consumed for max duration: {maxDuration} </h1>
                 </div>

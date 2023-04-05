@@ -15,8 +15,8 @@ appliance.forEach((appl)=> {
 });
 
 console.log(engy);*/
-module.exports = async function Model(inputData){
-        
+module.exports = async function Model(inputData) {
+
         const inputDataString = JSON.stringify(inputData);
         console.log(inputDataString, "nodejs");
         // Run the Python script and specify the output file
@@ -24,11 +24,11 @@ module.exports = async function Model(inputData){
 
         // Handle output from the script
         pythonProcess.stdout.on('data', (data) => {
-        console.log(`stdout: ${data} nodejs`);
+                console.log(`stdout: ${data} nodejs`);
         });
 
         pythonProcess.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
+                console.error(`stderr: ${data}`);
         });
 
         const readFile = util.promisify(fs.readFile);
@@ -38,16 +38,18 @@ module.exports = async function Model(inputData){
                         console.log(`child process exited with code ${code}`);
                         readFile('./output.json', 'utf8')
                                 .then((data) => {
-                                console.log(data, 'data1');
-                                resolve(data);
+                                        console.log(data, 'data1');
+                                        resolve(data);
                                 })
                                 .catch((err) => {
-                                console.error(err, 'err');
-                                reject(err);
+                                        console.error(err, 'err');
+                                        reject(err);
                                 });
-                        });
                 });
+        });
 
         console.log(data_n, 'data_n nodejs mai');
         return data_n;
 }
+
+

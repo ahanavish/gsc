@@ -631,7 +631,7 @@ option:hover:before {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
-    margin-top: 150px;
+    margin-top: 200px;
     border: 1px solid black;
     height: 350px;
     width: 845px;
@@ -795,4 +795,22 @@ iframe {
 
 .applogo {
     height: 80px;
+}
+
+.predict-button {
+    margin-top: 100px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 18px;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    letter-spacing: 3px;
+    background-color: transparent;
+    cursor: pointer;
+    border: 2px solid #fff;
+    padding: 15px 25px;
+    border-radius: 50px;
+    transition: 0.3s;
 }
