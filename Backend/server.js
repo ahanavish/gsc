@@ -158,7 +158,7 @@ app.get('/timeseries', async (req, res) => {
 app.post('/inference', Auth, async (req, res) => {
     try {
         const result = await Values(req.body.user.uid);
-        const flaskUrl = 'http://localhost:5000/';
+        const flaskUrl = 'http://flask-app:5000/';
 
         const data = await request.post(flaskUrl,  {json: result });
         return res.json({ data: data });
