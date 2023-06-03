@@ -64,7 +64,7 @@ function Predict() {
 
     return (
         <div>
-            <Navbar item1="Dashboard" item2="Guide" item3="Analyze" item4="About"></Navbar>
+            <Navbar item1="Dashboard" item2="Guide" item3="Analyze" item4="Pay" item5="About"></Navbar>
             <div className="predict-button"><button name="button" onClick={getData}>Predict the future consumption</button></div>
             <div className="predictBox">
                 <Chart

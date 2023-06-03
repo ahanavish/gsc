@@ -113,7 +113,7 @@ function Dashboard() {
 
     return (
         <div className="dash">
-            <Navbar item1="Guide" item2="Analyze" item3="Predict" item4="About" />
+            <Navbar item1="Guide" item2="Analyze" item3="Predict" item4="Pay" item5="About" />
             <div className="column1row1">
                 <div className="userImage">
                     <img src={url} alt="profileImage"></img>

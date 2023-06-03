@@ -6,7 +6,7 @@ function About() {
 
     return (
         <div>
-            <Navbar item1="Dashboard" item2="Guide" item3="Analyze" item4="Predict" />
+            <Navbar item1="Dashboard" item2="Guide" item3="Analyze" item4="Predict" item5="Pay" />
             <div className="head1">
                 What is WattWise?
             </div>

@@ -10,7 +10,7 @@ const SignIn = () => {
 
     const handleGoogleSignIn = async () => {
         try {
-            console.log(user, 'user');
+            console.log(user, 'user-before');
             await googleSignIn();
         } catch (error) {
             console.log(error);
@@ -19,20 +19,21 @@ const SignIn = () => {
 
     useEffect(() => {
         if (user != null) {
-            console.log(user.uid);
+            console.log(user.uid, 'uid');
             fetch(('http://localhost:8080/isexist?uid=' + user.uid), {
                 method: 'GET'
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.status, 'status')
+                    console.log(data);
+                    console.log(data.status, 'status-value')
                     setsuccessValue(data.status)
                 })
                 .catch(error => console.error(error));
         }
     }, []);
 
-    // console.log(successValue);
+    console.log(successValue, 'status');
     if (successValue)
         navigate('/dashboard');
     else
@@ -42,7 +43,7 @@ const SignIn = () => {
         <div className="form">
             <div className="form-wrapper">
                 <form action="#">
-                    <h1>Sign in</h1>
+                    <h1>Sign Up/ Sign In </h1>
                     <div className="social">
                         <GoogleButton type="dark" onClick={handleGoogleSignIn} />
                     </div>

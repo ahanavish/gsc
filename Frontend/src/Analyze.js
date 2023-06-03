@@ -72,7 +72,7 @@ function Analyze() {
 
     return (
         <div>
-            <Navbar item1="Dashboard" item2="Guide" item3="Predict" item4="About" />
+            <Navbar item1="Dashboard" item2="Guide" item3="Predict" item4="Pay" item5="About" />
             <div className="form-wrap">
                 <div className="form-container">
                     {
