@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
 
 function Pay() {
     return (
@@ -11,29 +12,29 @@ function Pay() {
                     <div className="pay">
                         <table className="paytable">
                             <tr>
-                                <th>Biller: </th>
-                                <td></td>
+                                <th>Biller:      </th>
+                                <td>BESCOM - BENGALURU</td>
                             </tr>
                             <tr>
-                                <th>Bill Amount: </th>
-                                <td></td>
+                                <th>Bill Amount:        </th>
+                                <td>2100.0</td>
                             </tr>
                             <tr>
-                                <th>Account ID: </th>
-                                <td></td>
+                                <th>Account ID:         </th>
+                                <td>4591387000</td>
                             </tr>
                             <tr>
-                                <th>Due date: </th>
-                                <td></td>
+                                <th>Due date:       </th>
+                                <td>2020-07-10</td>
                             </tr>
                             <tr>
-                                <th>Bill Date: </th>
-                                <td></td>
+                                <th>Bill Date:      </th>
+                                <td>11 Jun 2020</td>
                             </tr>
                         </table>
                     </div>
                     <div className="submitBtn">
-                        <button>Pay Bill</button>
+                        <Link to="/pay2" style={{ textDecoration: 'none' }}><button>Pay Bill</button></Link>
                     </div>
                 </div>
             </div>

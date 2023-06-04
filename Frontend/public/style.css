@@ -365,6 +365,7 @@ button:hover {
 .youtube-head {
     position: absolute;
     left: 50%;
+    font-family: 'Montserrat', sans-serif;
     transform: translate(-50%, 0);
     color: #454343;
 }
@@ -561,7 +562,7 @@ option:hover:before {
     font-size: 15px;
     padding-bottom: 10px;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .userInfo2 {
@@ -820,10 +821,19 @@ iframe {
     margin: 0 auto;
     border-collapse: inherit;
     border-spacing: 0 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
 }
 
 .paytable tr {
     text-align: left;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+.paytable th {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
 }
 
 .pay {
@@ -832,6 +842,7 @@ iframe {
 }
 
 .paywrapper {
+    margin-top: 70px;
     padding-top: 30px;
     padding-bottom: 30px;
     background-color: #f3f3f3;
@@ -853,4 +864,10 @@ iframe {
 
 .payBtn {
     margin: 10px auto;
+}
+
+.paywrapper h1,
+.pay2wrapper h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
 }

@@ -143,19 +143,57 @@ app.get('/timeseries', async (req, res) => {
 
 })
 
+app.get('/billers', async (req, res) => {
+})
+
 app.post('/inference', Auth, async (req, res) => {
     try {
         const result = await Values(req.body.user.uid);
         const flaskUrl = 'http://flask-app:5000/';
 
-        const data = await request.post(flaskUrl,  {json: result });
+        const data = await request.post(flaskUrl, { json: result });
         return res.json({ data: data });
 
-      } catch (error) {
+    } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
-      }
-  });
+    }
+});
+
+app.post('/transaction', Auth, async (req, res) => {
+    try {
+        const requests = req.body;
+
+        const payurl = 'https://zuelpay.com/api/utility/billpay/transaction ';
+
+        const data = await request.post(payurl, { json: requests });
+        console.log(req.body)
+        console.log(data)
+        return res.json({ data: data });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.post('/fetchbill', Auth, async (req, res) => {
+    try {
+        const r = req.body
+
+        const payurl = 'https://zuelpay.com/api/utility/billpay/transaction ';
+
+        const data = await request.post(payurl, { json: requests });
+        console.log(req.body)
+        console.log(data)
+        return res.json({ data: data });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 
 app.patch('/updateprofile', Auth, async (req, res) => { // PUT is to update the whole document, PATCH is to update a part of the document
     // console.log(req.body);
