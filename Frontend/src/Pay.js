@@ -13,7 +13,7 @@ function Pay() {
                         <table className="paytable">
                             <tr>
                                 <th>Biller:      </th>
-                                <td>BESCOM - BENGALURU</td>
+                                <td>PVVNL</td>
                             </tr>
                             <tr>
                                 <th>Bill Amount:        </th>
