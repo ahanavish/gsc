@@ -20,7 +20,8 @@ Apart from tracking and predicting electricity usage, our application offers an 
 - Provides personalized recommendations on how to save energy.
 - Includes a cutting-edge machine learning model for accurate - - prediction of electricity consumption.
 - Offers a visual representation of your electricity.
-- consumption compared to the average consumption in your state or region.
+- Consumption compared to the average consumption in your state or region.
+- View and pay Electricity bill through the application itself.
 
 # Docker Environment
 Clone the repository to your local machine.
